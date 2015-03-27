@@ -1,0 +1,87 @@
+[
+  {
+    "date": "2015-03-27T12:13:48.179Z",
+    "articleId": "NewsTest3",
+    "labels": [
+      "test",
+      "new"
+    ],
+    "expiration": "2015-03-30T11:13:48.179Z",
+    "title": "This is a test of the add news route",
+    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**",
+    "links": [
+      {
+        "rel": "self",
+        "href": "/news/NewsTest3"
+      }
+    ]
+  },
+  {
+    "date": "2015-03-27T12:13:50.787Z",
+    "articleId": "NewsTest4",
+    "labels": [
+      "test",
+      "new"
+    ],
+    "expiration": "2015-03-30T11:13:50.787Z",
+    "title": "This is a test of the add news route",
+    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**",
+    "links": [
+      {
+        "rel": "self",
+        "href": "/news/NewsTest4"
+      }
+    ]
+  },
+  {
+    "date": "2015-03-27T12:13:53.411Z",
+    "articleId": "NewsTest5",
+    "labels": [
+      "test",
+      "new"
+    ],
+    "expiration": "2015-03-30T11:13:53.411Z",
+    "title": "This is a test of the add news route",
+    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**",
+    "links": [
+      {
+        "rel": "self",
+        "href": "/news/NewsTest5"
+      }
+    ]
+  },
+  {
+    "date": "2015-03-27T12:13:56.019Z",
+    "articleId": "NewsTest6",
+    "labels": [
+      "test",
+      "new"
+    ],
+    "expiration": "2015-03-30T11:13:56.019Z",
+    "title": "This is a test of the add news route",
+    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**",
+    "links": [
+      {
+        "rel": "self",
+        "href": "/news/NewsTest6"
+      }
+    ]
+  },
+  {
+    "date": "2015-03-27T12:24:48.907Z",
+    "articleId": "NewsTest8",
+    "labels": [
+      "test",
+      "new"
+    ],
+    "expiration": "2015-04-26T12:24:48.907Z",
+    "title": "This is a test of the add news route",
+    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**",
+    "links": [
+      {
+        "rel": "self",
+        "href": "/news/NewsTest8"
+      }
+    ]
+  }
+]
