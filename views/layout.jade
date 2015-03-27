@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/linnstrap.css')
+    link(rel='stylesheet', href='/stylesheets/kaboom.css')
+    script(src='/bower_components/jquery/dist/jquery.min.js')
+    script(src="/javascripts/kaboom.js",type="text/javascript",data-root="/")
+  body
+    div.container.ticker-container
+      block content
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')

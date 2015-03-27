@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    article
+        div.clearfix
+            each label in labels
+                div.pull-left
+                    span.label.label-info= label
+            div.pull-right
+                span(title=date)= prettyDate
+        div!= md(content)
