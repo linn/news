@@ -1,0 +1,35 @@
+{
+  "name": "Bootstrap Markdown Editor",
+  "description": "Markdown editor for Bootstrap with preview, image upload support, shortcuts and other features.",
+  "version": "1.1.0",
+  "authors": [
+    "Ignacio de Tomás <nacho@inacho.es>"
+  ],
+  "keywords": [
+    "markdown",
+    "bootstrap",
+    "editor",
+    "ace"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.1",
+    "ace-builds": "~1.1.8"
+  },
+  "homepage": "https://github.com/inacho/bootstrap-markdown-editor",
+  "_release": "1.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.0",
+    "commit": "8446876f942cdbdba4e59c8b4539d4f3e8571d8d"
+  },
+  "_source": "git://github.com/inacho/bootstrap-markdown-editor.git",
+  "_target": "~1.1.0",
+  "_originalSource": "bootstrap-markdown-editor",
+  "_direct": true
+}

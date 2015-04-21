@@ -18,6 +18,7 @@
     "linn-cloud-libs": "git+ssh://it.linn.co.uk:home/git/linn-cloud-libs.git",
     "moment": "^2.9.0",
     "morgan": "~1.5.1",
+    "multiparty": "^4.1.1",
     "node-markdown": "^0.1.1",
     "serve-favicon": "~2.2.0",
     "underscore": "^1.8.2"

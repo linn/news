@@ -1,8 +1,6 @@
 "use strict";
 var repository = require('../repositories/newsRepository');
-
 var _ = require('underscore');
-
 var moment = require('moment');
 
 function createModel(req) {
@@ -51,6 +49,10 @@ module.exports.getNewsArticle = function getNewsArticle(req, res, next) {
             res.render('news', toNewsViewModel(data));
         }
     });
+};
+
+module.exports.getCreateNewsArticle = function getCreateNewsArticle(req, res, next) {
+    res.render('create');
 };
 
 module.exports.putNewsArticle = function putNewsArticle(req, res, next) {
