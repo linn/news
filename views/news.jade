@@ -5,7 +5,8 @@ block content
         div.clearfix
             each label in labels
                 div.pull-left
-                    span.label.label-info= label
+                    span.label.label-info=label
+                    | &nbsp;
             div.pull-right
                 span(title=date)= prettyDate
         div!= md(content)

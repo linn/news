@@ -6,6 +6,7 @@
   "license": "",
   "private": true,
   "dependencies": {
-    "bootstrap": "~3.1.1"
+    "bootstrap": "~3.3.4",
+    "bootstrap-markdown-editor": "~1.1.0"
   }
 }

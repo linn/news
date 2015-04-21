@@ -97,12 +97,27 @@ describe('News Api', function () {
             expect(res.set).to.have.been.calledWith('Location', '/news/TestArticle');
         });
     });
+    describe('When getting the create news article page', function () {
+        var next, res, req, data;
+        beforeEach(function (done) {
+            req = generateRequestStub('text/html', { articleId: 'TestArticle' });
+            res = generateResponseStub(done);
+            next = function (error) {
+                res.statusCode = error.status;
+                done();
+            };
+            sut.getCreateNewsArticle(req, res, next);
+        });
+        it('Should render the create view', function () {
+            expect(res.render).to.have.been.calledWith("create");
+        });
+    });
     describe('When getting a news article', function () {
         var next, res, req, data;
         beforeEach(function (done) {
             data = require('../data/newsArticle.json');
             loadCallbackArgs[1] = data;
-            req = generateRequestStub('application/json', { articleId: 'TestArticle' });
+            req = generateRequestStub('text/html', { articleId: 'TestArticle' });
             res = generateResponseStub(done);
             next = function (error) {
                 res.statusCode = error.status;
