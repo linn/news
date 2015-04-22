@@ -98,7 +98,7 @@ describe('News Api', function () {
         });
     });
     describe('When getting the create news article page', function () {
-        var next, res, req, data;
+        var next, res, req;
         beforeEach(function (done) {
             req = generateRequestStub('text/html', { articleId: 'TestArticle' });
             res = generateResponseStub(done);
@@ -110,6 +110,33 @@ describe('News Api', function () {
         });
         it('Should render the create view', function () {
             expect(res.render).to.have.been.calledWith("create");
+        });
+    });
+    describe('When getting the edit news article page', function () {
+        var next, res, req, data;
+        beforeEach(function (done) {
+            data = require('../data/newsArticle.json');
+            loadCallbackArgs[1] = data;
+            req = generateRequestStub('text/html', { articleId: 'TestArticle' });
+            res = generateResponseStub(done);
+            next = function (error) {
+                res.statusCode = error.status;
+                done();
+            };
+            sut.getEditNewsArticle(req, res, next);
+        });
+        it('Should get a news article from the repository', function () {
+            expect(newsRepositoryStub.findById).to.have.been.called;
+        });
+        it('Should render news article', function () {
+            expect(res.render).to.have.been.calledWith("create", {
+                title: data.title,
+                md: sinon.match.any,
+                content: data.content,
+                labels: data.labels,
+                date: sinon.match.any,
+                prettyDate: sinon.match.any
+            });
         });
     });
     describe('When getting a news article', function () {
