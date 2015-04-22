@@ -135,7 +135,8 @@ describe('News Api', function () {
                 content: data.content,
                 labels: data.labels,
                 date: sinon.match.any,
-                prettyDate: sinon.match.any
+                prettyDate: sinon.match.any,
+                href: '/news/' + data.articleId
             });
         });
     });
@@ -162,7 +163,8 @@ describe('News Api', function () {
                 content: data.content,
                 labels: data.labels,
                 date: sinon.match.any,
-                prettyDate: sinon.match.any
+                prettyDate: sinon.match.any,
+                href: '/news/' + data.articleId
             });
         });
     });

@@ -41,7 +41,7 @@ module.exports.putNewsArticle = function putNewsArticle(req, res, next) {
         if (err) {
             next(err);
         } else {
-            res.set('Location', '/news/' + model.articleId);
+            res.set('Location', factories.generateHref(model));
             res.json(model);
             res.status(201);
         }

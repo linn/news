@@ -1,6 +1,12 @@
 extends layout
 
 block content
+    ol.breadcrumb
+        li
+            a(href="/") Home
+        li.active News
+        li.active= title
+
     article
         h1= title
         div.clearfix
