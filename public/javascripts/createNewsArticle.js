@@ -9,6 +9,7 @@
 
     $('#create-news-article').on('submit', function (e) {
         e.preventDefault();
+        var $button = $('#submit').button('loading');
         var content = $('#news-content-editor').markdownEditor('content');
         var title = $('#title').val();
         var labelsText = $('#labels').val();
@@ -26,6 +27,9 @@
         });
         response.done(function (data) {
             window.location.href = response.getResponseHeader('Location');
+        });
+        response.always(function () {
+            $button.button('reset');
         });
     });
 })($);

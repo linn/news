@@ -2,6 +2,11 @@
 var moment = require('moment');
 var _ = require('underscore');
 
+function generateHref(model) {
+    return "/news/"+model.articleId;
+}
+module.exports.generateHref = generateHref;
+
 module.exports.createModel = function createModel(req) {
     var postDate = new Date();
     var expirationDate = new Date();
@@ -20,7 +25,7 @@ module.exports.toNewsListResource = function toNewsListResource(model) {
     var resource = _.clone(model);
     resource.links = [{
         "rel": "self",
-        "href": "/news/"+model.articleId
+        "href": generateHref(model)
     }];
     return resource;
 };
@@ -32,6 +37,7 @@ module.exports.toNewsViewModel = function toNewsViewModel(model) {
         md: require('node-markdown').Markdown,
         content: model.content,
         date: moment(model.date).format('MMMM Do YYYY, HH:mm'),
-        prettyDate: moment(model.date).fromNow()
+        prettyDate: moment(model.date).fromNow(),
+        href: generateHref(model)
     };
 };
