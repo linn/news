@@ -1,6 +1,5 @@
-"use strict";
-
 (function ($) {
+    "use strict";
     $('#news-content-editor').markdownEditor({
         imageUpload: true,
         uploadPath: 'upload',
