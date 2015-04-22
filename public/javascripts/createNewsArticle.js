@@ -4,7 +4,8 @@
     $('#news-content-editor').markdownEditor({
         imageUpload: true,
         uploadPath: 'upload',
-        fullscreen: false
+        fullscreen: false,
+        theme: 'textmate'
     });
 
     $('#create-news-article').on('submit', function (e) {
@@ -15,7 +16,7 @@
         var uri = '/news/' + encodeURIComponent(title.replace(/ /g, '_').toLowerCase());
         var data = {
             title: title,
-            labels: labelsText ? labelsText.trim().split(/ +/) : [],
+            labels: labelsText ? labelsText.trim().split(/[ ,]+/) : [],
             content: content
         };
         var response = $.ajax({

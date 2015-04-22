@@ -16,8 +16,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger(config.requestLoggerFormat, { stream: config.logger.stream }));
 
 app.use(bodyParser.json());
@@ -27,9 +26,13 @@ app.use(cookieParser());
 app.use('/news', express.static(path.join(__dirname, 'public')));
 app.use('/news/bower_components',  express.static(__dirname + '/bower_components'));
 
+// Application
 app.get('/news/create', newsRoutes.getCreateNewsArticle);
-app.post('/news/upload', s3Routes.uploadImage);
+app.get('/news/:articleId/edit', newsRoutes.getEditNewsArticle);
 app.get('/news/:articleId', newsRoutes.getNewsArticle);
+
+// API
+app.post('/news/upload', s3Routes.uploadImage);
 app.put('/news/:articleId', newsRoutes.putNewsArticle);
 app.get('/news', newsRoutes.listNewsArticles);
 

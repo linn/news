@@ -4,13 +4,13 @@ block content
     form(role=form)#create-news-article
         div.form-group
             label(for="title") Title
-            input#title.form-control(placeholder="Enter Title")
+            input#title.form-control(placeholder="Enter Title", value=title)
         div.form-group
             label(for="labels") Labels
-            input#labels.form-control(placeholder="Labels")
+            input#labels.form-control(placeholder="Labels", value=labels)
         div.form-group
             label(for="news-content-editor") Content
-            div#news-content-editor
+            div#news-content-editor= content
         div.form-group
             button(type=submit).btn.btn-success.pull-right Save
     script(src="/news/javascripts/createNewsArticle.js",type="text/javascript")
