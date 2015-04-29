@@ -7,37 +7,7 @@ var mockery = require('mockery');
 var expect = chai.expect;
 chai.use(sinonChai);
 
-function generateResponseStub(done) {
-    return {
-        json: sinon.spy(),
-        status: function(statusCode) {
-            this.statusCode = statusCode;
-            done();
-        },
-        render: sinon.spy(function () {
-            done();
-        }),
-        sendStatus: function(statusCode) {
-            this.statusCode = statusCode;
-            done();
-        },
-        set: sinon.spy()
-    };
-}
-
-function generateRequestStub(acceptHeader, parameters, body) {
-    return {
-        accepts: function () {
-            return this.headers.accept;
-        },
-        headers: {
-            accept: acceptHeader
-        },
-        params: parameters,
-        query: parameters,
-        body: body
-    };
-}
+var expressTesting = require('linn-cloud-libs/testing/express');
 
 describe('News Api', function () {
     var sut, loadCallbackArgs, saveCallbackArgs, removeCallbackArgs, listCallbackArgs, newsRepositoryStub;
@@ -76,8 +46,8 @@ describe('News Api', function () {
                 date: sinon.match(/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/),
                 expiration: sinon.match(/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/)
             };
-            req = generateRequestStub('application/json', { articleId: 'TestArticle' }, data);
-            res = generateResponseStub(done);
+            req = expressTesting.generateRequestStub('application/json', { articleId: 'TestArticle' }, data);
+            res = expressTesting.generateResponseStub(done);
             next = function(error) {
                 res.statusCode = error.status;
                 done();
@@ -100,8 +70,8 @@ describe('News Api', function () {
     describe('When getting the create news article page', function () {
         var next, res, req;
         beforeEach(function (done) {
-            req = generateRequestStub('text/html', { articleId: 'TestArticle' });
-            res = generateResponseStub(done);
+            req = expressTesting.generateRequestStub('text/html', { articleId: 'TestArticle' });
+            res = expressTesting.generateResponseStub(done);
             next = function (error) {
                 res.statusCode = error.status;
                 done();
@@ -117,8 +87,8 @@ describe('News Api', function () {
         beforeEach(function (done) {
             data = require('../data/newsArticle.json');
             loadCallbackArgs[1] = data;
-            req = generateRequestStub('text/html', { articleId: 'TestArticle' });
-            res = generateResponseStub(done);
+            req = expressTesting.generateRequestStub('text/html', { articleId: 'TestArticle' });
+            res = expressTesting.generateResponseStub(done);
             next = function (error) {
                 res.statusCode = error.status;
                 done();
@@ -145,8 +115,8 @@ describe('News Api', function () {
         beforeEach(function (done) {
             data = require('../data/newsArticle.json');
             loadCallbackArgs[1] = data;
-            req = generateRequestStub('text/html', { articleId: 'TestArticle' });
-            res = generateResponseStub(done);
+            req = expressTesting.generateRequestStub('text/html', { articleId: 'TestArticle' });
+            res = expressTesting.generateResponseStub(done);
             next = function (error) {
                 res.statusCode = error.status;
                 done();
@@ -171,8 +141,8 @@ describe('News Api', function () {
     describe('When getting a news article that is missing', function () {
         var next, res, req;
         beforeEach(function (done) {
-            req = generateRequestStub('application/json', { articleId: 'TestArticle' });
-            res = generateResponseStub(done);
+            req = expressTesting.generateRequestStub('application/json', { articleId: 'TestArticle' });
+            res = expressTesting.generateResponseStub(done);
             next = function (error) {
                 res.statusCode = error.status;
                 done();
@@ -187,8 +157,8 @@ describe('News Api', function () {
         var next, res, req;
         beforeEach(function (done) {
             listCallbackArgs[1] = require('../data/listNewsArticles.json')
-            req = generateRequestStub('application/json', { count: 5 });
-            res = generateResponseStub(done);
+            req = expressTesting.generateRequestStub('application/json', { count: 5 });
+            res = expressTesting.generateResponseStub(done);
             next = function (error) {
                 res.statusCode = error.status;
                 done();

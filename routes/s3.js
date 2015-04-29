@@ -20,7 +20,6 @@ exports.uploadImage = function streamToS3(req, res, next) {
         var params = {
             Bucket: config.s3.buckets.newsAttachments,
             Key: part.filename,
-            ACL: 'public-read',
             Body: part,
             ContentDisposition: 'attachment; filename=' + part.filename,
             ContentType: part.headers['content-type'],
