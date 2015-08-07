@@ -11,6 +11,7 @@ var config = require('linn-cloud-libs/config');
 var newsRoutes = require('./routes/news');
 var s3Routes = require('./routes/s3');
 var notificationRoutes = require('./routes/notifications');
+var pingApi = require('./routes/pingApi');
 
 var app = express();
 
@@ -37,6 +38,9 @@ app.post('/news/upload', s3Routes.uploadImage);
 app.put('/news/:articleId', newsRoutes.putNewsArticle);
 app.get('/news', newsRoutes.listNewsArticles);
 app.get('/notifications', notificationRoutes.get);
+
+// Ping
+app.get('/ping', pingApi.ping);
 
 if (config.reset) {
     app.delete('/reset', function (req, res, next) {
