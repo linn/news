@@ -13,8 +13,9 @@ GIT_COMMIT=`git ls-remote git@it:/home/git/news.git ${BRANCH} | cut -f 1`
 TIMESTAMP=`date --utc +%FT%TZ`
 PACKAGE_NAME="news-service"
 PACKAGE_VERSION="0.${BUILD_NUMBER}"
+
 if [ ${PRODUCTION_RELEASE} = true ]
-	then
+then
 	PACKAGE_VERSION="1.${BUILD_NUMBER}"
 fi
 
@@ -58,7 +59,7 @@ echo "Creating ping resources"
 echo "{ \"timeStamp\": \"${TIMESTAMP}\", \"config\": \"${CONFIGURATION}\", \"branch\": \"${BRANCH}\", \"build\": \"${BUILD_NUMBER}\", \"commit\": \"${GIT_COMMIT}\" }" > ${TARGET_DIR}/ping.json
 
 echo "Copying Init Script"
-git archive --format=tar --remote=git@it:/home/git/news.git ${BRANCH}:ContinuousIntegration/Deploy/startup-scripts cloud-exakt-service.${CONFIGURATION} | tar --directory=${SYSROOT}/etc/init.d/ -xf -
+git archive --format=tar --remote=git@it:/home/git/news.git ${BRANCH}:ContinuousIntegration/Deploy/startup-scripts news-service.${CONFIGURATION} | tar --directory=${SYSROOT}/etc/init.d/ -xf -
 mv ${SYSROOT}/etc/init.d/news-service.${CONFIGURATION} ${SYSROOT}/etc/init.d/news-service
 chmod +x ${SYSROOT}/etc/init.d/news-service
 
