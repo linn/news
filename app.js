@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var config = require('linn-cloud-libs/config');
 var newsRoutes = require('./routes/news');
 var s3Routes = require('./routes/s3');
+var notificationRoutes = require('./routes/notifications');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.get('/news/:articleId', newsRoutes.getNewsArticle);
 app.post('/news/upload', s3Routes.uploadImage);
 app.put('/news/:articleId', newsRoutes.putNewsArticle);
 app.get('/news', newsRoutes.listNewsArticles);
+app.get('/notifications', notificationRoutes.get);
 
 if (config.reset) {
     app.delete('/reset', function (req, res, next) {

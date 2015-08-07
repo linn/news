@@ -8,7 +8,8 @@
     ],
     "expiration": "2015-03-30T11:13:42.316Z",
     "title": "This is a test of the add news route",
-    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**"
+    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**",
+    "summary": "News Summary"
   },
   {
     "date": "2015-03-27T12:13:44.844Z",
@@ -19,7 +20,8 @@
     ],
     "expiration": "2015-03-30T11:13:44.844Z",
     "title": "This is a test of the add news route",
-    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**"
+    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**",
+    "summary": "News Summary"
   },
   {
     "date": "2015-03-27T12:13:48.179Z",
@@ -30,7 +32,8 @@
     ],
     "expiration": "2015-03-30T11:13:48.179Z",
     "title": "This is a test of the add news route",
-    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**"
+    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**",
+    "summary": "News Summary"
   },
   {
     "date": "2015-03-27T12:13:50.787Z",
@@ -41,7 +44,8 @@
     ],
     "expiration": "2015-03-30T11:13:50.787Z",
     "title": "This is a test of the add news route",
-    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**"
+    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**",
+    "summary": "News Summary"
   },
   {
     "date": "2015-03-27T12:13:53.411Z",
@@ -52,7 +56,8 @@
     ],
     "expiration": "2015-03-30T11:13:53.411Z",
     "title": "This is a test of the add news route",
-    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**"
+    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**",
+    "summary": "News Summary"
   },
   {
     "date": "2015-03-27T12:24:48.907Z",
@@ -63,7 +68,8 @@
     ],
     "expiration": "2015-04-26T12:24:48.907Z",
     "title": "This is a test of the add news route",
-    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**"
+    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**",
+    "summary": "News Summary"
   },
   {
     "date": "2015-03-27T12:13:56.019Z",
@@ -74,6 +80,7 @@
     ],
     "expiration": "2015-03-30T11:13:56.019Z",
     "title": "This is a test of the add news route",
-    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**"
+    "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**",
+    "summary": "News Summary"
   }
 ]

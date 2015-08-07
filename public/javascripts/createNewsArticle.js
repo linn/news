@@ -12,11 +12,13 @@
         var $button = $('#submit').button('loading');
         var content = $('#news-content-editor').markdownEditor('content');
         var title = $('#title').val();
+        var summary = $('#summary').val();
         var labelsText = $('#labels').val();
         var uri = '/news/' + encodeURIComponent(title.replace(/ /g, '_').toLowerCase());
         var data = {
             title: title,
             labels: labelsText ? labelsText.trim().split(/[ ,]+/) : [],
+            summary: summary,
             content: content
         };
         var response = $.ajax({
