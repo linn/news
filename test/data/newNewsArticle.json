@@ -1,5 +1,6 @@
 {
   "title": "This is a test of the add news route",
   "labels": ["test", "new"],
+  "summary": "News article summary",
   "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**"
 }

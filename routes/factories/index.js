@@ -15,14 +15,24 @@ module.exports.createModel = function createModel(req) {
         articleId: req.params.articleId,
         labels: _.isArray(req.body.labels) ? _.compact(req.body.labels) : [],
         content: req.body.content || "",
+        summary: req.body.summary || "",
         title: req.body.title || "",
         date: postDate.toISOString(),
         expiration: expirationDate.toISOString()
     };
 };
 
+function toASPDate(date) {
+    return "\/Date(" + new Date(date).getTime() + ")\/";
+}
+
 module.exports.toNewsListResource = function toNewsListResource(model) {
-    var resource = _.clone(model);
+    var resource = {
+        created: toASPDate(model.date),
+        labels: model.labels,
+        content: model.summary,
+        title: model.title
+    }
     resource.links = [{
         "rel": "self",
         "href": generateHref(model)
