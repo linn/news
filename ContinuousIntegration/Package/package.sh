@@ -74,6 +74,9 @@ echo "then" >> ${DEBIAN}/preinst
 echo "/etc/init.d/news-populator stop" >> ${DEBIAN}/preinst
 echo "fi" >> ${DEBIAN}/preinst
 
+echo "Create postinst file"
+echo "adduser --system news-service" >> ${DEBIAN}/postinst
+
 echo "Copy preinst file to prerm to stop service when uninstalling"
 cp ${DEBIAN}/preinst ${DEBIAN}/prerm
 
