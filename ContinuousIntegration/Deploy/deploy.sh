@@ -19,8 +19,8 @@ echo "*"
 echo "*************************************"
 
 echo "update the service files"
-ssh -oStrictHostKeyChecking=no exakt@${TARGET_HOST} "sudo apt-get update"
-ssh -oStrictHostKeyChecking=no exakt@${TARGET_HOST} "sudo apt-get install ${PACKAGE_NAME}"  
+ssh -oStrictHostKeyChecking=no linn-service@${TARGET_HOST} "sudo apt-get update"
+ssh -oStrictHostKeyChecking=no linn-service@${TARGET_HOST} "sudo apt-get install ${PACKAGE_NAME}"  
 
 echo "Starting News Service"
-ssh -oStrictHostKeyChecking=no exakt@${TARGET_HOST} "sudo /etc/init.d/news-service start"
+ssh -oStrictHostKeyChecking=no linn-service@${TARGET_HOST} "sudo /etc/init.d/news-service start"
