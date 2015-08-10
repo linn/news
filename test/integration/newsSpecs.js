@@ -47,7 +47,7 @@ describe('News Api', function () {
                 date: sinon.match(/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/),
                 expiration: sinon.match(/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/)
             };
-            req = expressTesting.generateRequestStub('application/json', { articleId: 'TestArticle' }, data);
+            req = expressTesting.generateRequestStub('application/vnd.linn.news+json; version=1', { articleId: 'TestArticle' }, data);
             res = expressTesting.generateResponseStub(done);
             next = function(error) {
                 res.statusCode = error.status;
@@ -176,7 +176,10 @@ describe('News Api', function () {
             expect(res.json).to.have.been.called;
         });
         it('Should return correct json', function () {
-            expect(res.json).to.have.been.calledWith(require('../data/expectedList.json'));
+            expect(res.json).to.have.been.calledWith({
+                posts: require('../data/expectedList.json'),
+                links: [{ rel: 'all', href: '' }]
+            });
         });
     });
 });

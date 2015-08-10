@@ -26,7 +26,24 @@ function toASPDate(date) {
     return "\/Date(" + new Date(date).getTime() + ")\/";
 }
 
-module.exports.toNewsListResource = function toNewsListResource(model) {
+module.exports.toNotificationsResource = function toNotificationsResource(models) {
+    return {
+        notifications: _.map(models, this.toNewsSummaryResource)
+    };
+};
+
+module.exports.toNewsListResource = function toNewsListResource(models) {
+    var resource = {
+        posts: _.map(models, this.toNewsSummaryResource)
+    };
+    resource.links = [{
+        "rel": "all",
+        "href": ""
+    }];
+    return resource;
+};
+
+module.exports.toNewsSummaryResource = function toNewsSummaryResource(model) {
     var resource = {
         created: toASPDate(model.date),
         labels: model.labels,

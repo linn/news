@@ -3,6 +3,18 @@ var repository = require('../repositories/newsRepository');
 var _ = require('underscore');
 var factories = require('./factories');
 
+var newsMediaType = 'application/vnd.linn.news+json; version=1';
+
+function negotiate(req, res, data, statusCode) {
+    if (req.header('Accept') === 'application/json' || req.accepts(newsMediaType) === newsMediaType) {
+        res.set('Content-Type', newsMediaType);
+        res.json(factories.toNewsListResource(data));
+        res.status(statusCode);
+    } else {
+        res.sendStatus(406);
+    }
+}
+
 module.exports.getNewsArticle = function getNewsArticle(req, res, next) {
     repository.findById(req.params.articleId, function (err, data) {
         if (err) {
@@ -42,6 +54,7 @@ module.exports.putNewsArticle = function putNewsArticle(req, res, next) {
             next(err);
         } else {
             res.set('Location', factories.generateHref(model));
+            res.set('Content-Type', newsMediaType);
             res.json(model);
             res.status(201);
         }
@@ -54,8 +67,7 @@ module.exports.listNewsArticles = function listNewsArticles(req, res, next) {
         if (err) {
             next(err);
         } else {
-            res.json(_.chain(data).sortBy('date').last(numArticles).map(factories.toNewsListResource).value());
-            res.status(200);
+            negotiate(req, res, _.chain(data).sortBy('date').last(numArticles).value(), 200);
         }
     });
 };

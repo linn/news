@@ -20,7 +20,7 @@ describe('Factories', function () {
                 "title": "This is a test of the add news route",
                 "content": "#New Article\n\nNews articles can now be written using /markdown/ - **woo!**"
             };
-            resource = sut.toNewsListResource(model);
+            resource = sut.toNewsSummaryResource(model);
         });
         it('Should include created formatted as ASP', function () {
             expect(resource.created).to.eql('\/Date(1427458422316)\/');
