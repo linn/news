@@ -71,7 +71,7 @@ DAEMON=/usr/bin/$NAME                 # this SHOULD POINT TO where your node exe
 APPLOG_FILE=/var/log/news-service/news-service.log
 
 PROCESS_TITLE="newsService"
-NODE_ENV=int
+NODE_ENV=release
 PORT=60350
 
 #
