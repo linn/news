@@ -56,7 +56,9 @@ describe('Notifications Api', function () {
             expect(res.json).to.have.been.called;
         });
         it('Should return the last 5 news articles json', function () {
-            expect(res.json).to.have.been.calledWith(require('../data/expectedList.json'));
+            expect(res.json).to.have.been.calledWith({
+                notifications: require('../data/expectedList.json')
+            });
         });
     });
 });
