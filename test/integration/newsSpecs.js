@@ -107,6 +107,7 @@ describe('News Api', function () {
                 labels: data.labels,
                 date: sinon.match.any,
                 prettyDate: sinon.match.any,
+                summary: data.summary,
                 href: '/news/' + data.articleId
             });
         });
@@ -133,6 +134,7 @@ describe('News Api', function () {
                 md: sinon.match.any,
                 content: data.content,
                 labels: data.labels,
+                summary: data.summary,
                 date: sinon.match.any,
                 prettyDate: sinon.match.any,
                 href: '/news/' + data.articleId
