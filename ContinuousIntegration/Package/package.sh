@@ -63,19 +63,14 @@ git archive --format=tar --remote=git@it:/home/git/news.git ${BRANCH}:Continuous
 mv ${SYSROOT}/etc/init.d/news-service.${CONFIGURATION} ${SYSROOT}/etc/init.d/news-service
 chmod +x ${SYSROOT}/etc/init.d/news-service
 
-
 echo "Create preinst file"
 echo "if [ -e /etc/init.d/news-service ]" > ${DEBIAN}/preinst
 echo "then" >> ${DEBIAN}/preinst
 echo "/etc/init.d/news-service stop" >> ${DEBIAN}/preinst
 echo "fi" >> ${DEBIAN}/preinst
-echo "if [ -e /etc/init.d/news-populator ]" >> ${DEBIAN}/preinst
-echo "then" >> ${DEBIAN}/preinst
-echo "/etc/init.d/news-populator stop" >> ${DEBIAN}/preinst
-echo "fi" >> ${DEBIAN}/preinst
 
 echo "Create postinst file"
-echo "adduser --system --group news-service" >> ${DEBIAN}/postinst
+echo "adduser --system --group news-service" > ${DEBIAN}/postinst
 
 echo "Copy preinst file to prerm to stop service when uninstalling"
 cp ${DEBIAN}/preinst ${DEBIAN}/prerm

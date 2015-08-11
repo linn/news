@@ -61,6 +61,7 @@ module.exports.toNewsViewModel = function toNewsViewModel(model) {
     return {
         title: model.title,
         labels: model.labels,
+        summary: model.summary,
         md: require('node-markdown').Markdown,
         content: model.content,
         date: moment(model.date).format('MMMM Do YYYY, HH:mm'),
