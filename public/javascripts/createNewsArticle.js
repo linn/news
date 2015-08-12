@@ -2,7 +2,7 @@
     "use strict";
     $('#news-content-editor').markdownEditor({
         imageUpload: true,
-        uploadPath: 'upload',
+        uploadPath: '/news/upload',
         fullscreen: false,
         theme: 'textmate'
     });
@@ -27,7 +27,7 @@
             data: JSON.stringify(data),
             contentType: 'application/json'
         });
-        response.done(function (data) {
+        response.done(function () {
             window.location.href = response.getResponseHeader('Location');
         });
         response.always(function () {
