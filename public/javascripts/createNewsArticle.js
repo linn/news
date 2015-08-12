@@ -30,6 +30,9 @@
         response.done(function () {
             window.location.href = response.getResponseHeader('Location');
         });
+        response.fail(function( jqXHR, textStatus, errorThrown ) {
+            window.alert(errorThrown);
+        });
         response.always(function () {
             $button.button('reset');
         });

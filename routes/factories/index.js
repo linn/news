@@ -8,6 +8,18 @@ function generateHref(model) {
 module.exports.generateHref = generateHref;
 
 module.exports.createModel = function createModel(req) {
+    if (!req.body.summary) {
+        throw new Error("Missing Summary");
+    }
+
+    if (!req.body.title) {
+        throw new Error("Missing Title");
+    }
+
+    if (!req.body.content) {
+        throw new Error("Missing Content");
+    }
+
     var postDate = new Date();
     var expirationDate = new Date();
     expirationDate.setDate(postDate.getDate() + (req.body.lifespan || 30));
@@ -49,7 +61,7 @@ module.exports.toNewsSummaryResource = function toNewsSummaryResource(model) {
         labels: model.labels,
         content: model.summary,
         title: model.title
-    }
+    };
     resource.links = [{
         "rel": "self",
         "href": generateHref(model)
