@@ -1,11 +1,9 @@
 "use strict";
-var _ = require('underscore');
 
 var config = require('linn-cloud-libs/config');
 var CloudRepository = require('linn-cloud-libs/dynamodb/repositories/cloudRepository').CloudRepository;
-var cloudRepository = new CloudRepository(config.dynamoDb.tables.news, "articleId");
+var repository = new CloudRepository(config.dynamoDb.tables.news, "articleId");
 
-var repository = _.extend({}, cloudRepository);
 repository.listCurrentArticles = function scanDynamoDbForCurrentArticles(callback) {
     var params = {
         TableName: config.dynamoDb.tables.news,
