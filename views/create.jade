@@ -17,8 +17,8 @@ block content
             label(for="labels") Labels
             input#labels.form-control(placeholder="Labels", value=labels)
         div.form-group
-            label(for="summary") Summary
-            textarea#summary.form-control(placeholder="Short summary of news article", autocomplete="off") summary
+            label(for="summary") Short Summary
+            textarea#summary.form-control(placeholder="Short summary of news article", autocomplete="off")= summary
         div.form-group
             label(for="news-content-editor") Content
             div#news-content-editor= content
