@@ -49,6 +49,7 @@ describe('Factories', function () {
                     body: {
                         labels: [ 'label1', 'label2' ],
                         content: '#header/nLook this is Markdown!',
+                        summary: 'summary',
                         title: 'This is the Title'
                     }
                 });
@@ -74,6 +75,51 @@ describe('Factories', function () {
                 expect(new Date(model.expiration)).to.equalDate(expectedExpiration);
             });
         });
+        describe('When creating with missing title', function () {
+            it('Should throw error', function () {
+                expect(sut.createModel.bind(sut, {
+                    params: {
+                        articleId: 'article_id'
+                    },
+                    body: {
+                        labels: [ 'label1', 'label2' ],
+                        content: '#header/nLook this is Markdown!',
+                        title: '',
+                        summary: 'summary'
+                    }
+                })).to.throw(Error);
+            });
+        });
+        describe('When creating with missing summary', function () {
+            it('Should throw error', function () {
+                expect(sut.createModel.bind(sut, {
+                    params: {
+                        articleId: 'article_id'
+                    },
+                    body: {
+                        labels: [ 'label1', 'label2' ],
+                        content: '#header/nLook this is Markdown!',
+                        title: 'This is the Title',
+                        summary: ''
+                    }
+                })).to.throw(Error);
+            });
+        });
+        describe('When creating with missing content', function () {
+            it('Should throw error', function () {
+                expect(sut.createModel.bind(sut, {
+                    params: {
+                        articleId: 'article_id'
+                    },
+                    body: {
+                        labels: [ 'label1', 'label2' ],
+                        content: '',
+                        title: 'This is the Title',
+                        summary: 'summary'
+                    }
+                })).to.throw(Error);
+            });
+        });
         describe('When creating with specific lifespan', function () {
             var model;
             beforeEach(function () {
@@ -84,6 +130,7 @@ describe('Factories', function () {
                     body: {
                         labels: [ 'label1', 'label2' ],
                         content: '#header/nLook this is Markdown!',
+                        summary: 'summary',
                         title: 'This is the Title',
                         lifespan: 5
                     }
@@ -105,6 +152,7 @@ describe('Factories', function () {
                     body: {
                         labels: [ 'label1', '' ],
                         content: '#header/nLook this is Markdown!',
+                        summary: 'summary',
                         title: 'This is the Title'
                     }
                 });
@@ -123,33 +171,13 @@ describe('Factories', function () {
                     body: {
                         labels: 'label1',
                         content: '#header/nLook this is Markdown!',
+                        summary: 'summary',
                         title: 'This is the Title'
                     }
                 });
             });
             it('Should replace with empty label', function () {
                 expect(model.labels).to.eql([]);
-            });
-        });
-        describe('When creating with missing data', function () {
-            var model;
-            beforeEach(function () {
-                model = sut.createModel({
-                    params: {
-                        articleId: 'article_id'
-                    },
-                    body: {
-                    }
-                });
-            });
-            it('Should replace with empty label', function () {
-                expect(model.labels).to.eql([]);
-            });
-            it('Should replace content with empty', function () {
-                expect(model.content).to.eql('');
-            });
-            it('Should replace title with empty', function () {
-                expect(model.title).to.eql('');
             });
         });
     });

@@ -48,7 +48,13 @@ module.exports.getEditNewsArticle = function getEditNewsArticle(req, res, next) 
 };
 
 module.exports.putNewsArticle = function putNewsArticle(req, res, next) {
-    var model = factories.createModel(req);
+    var model;
+    try {
+        model = factories.createModel(req);
+    } catch (err) {
+        err.status = 400;
+        next(err);
+    }
     repository.addOrReplace(model, function(err) {
         if (err) {
             next(err);
