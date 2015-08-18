@@ -174,12 +174,12 @@ describe('News Api', function () {
         it('Should return Ok', function () {
             expect(res.statusCode).to.eql(200);
         });
-        it('Should return correct json', function () {
+        it('Should call res.json', function () {
             expect(res.json).to.have.been.called;
         });
         it('Should return correct json', function () {
             expect(res.json).to.have.been.calledWith({
-                posts: require('../data/expectedList.json'),
+                posts: require('../data/expectedListReverse.json'),
                 links: [{ rel: 'all', href: '' }]
             });
         });

@@ -73,7 +73,7 @@ module.exports.listNewsArticles = function listNewsArticles(req, res, next) {
         if (err) {
             next(err);
         } else {
-            negotiate(req, res, _.chain(data).sortBy('date').last(numArticles).value(), 200);
+            negotiate(req, res, _.chain(data).sortBy('date').last(numArticles).reverse().value(), 200);
         }
     });
 };
