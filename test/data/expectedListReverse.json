@@ -1,0 +1,77 @@
+[
+  {
+    "created": "\/Date(1427459088907)\/",
+    "labels": [
+      "test",
+      "new"
+    ],
+    "title": "This is a test of the add news route",
+    "content": "News Summary",
+    "links": [
+      {
+        "rel": "self",
+        "href": "/news/NewsTest8"
+      }
+    ]
+  },
+  {
+    "created": "\/Date(1427458436019)\/",
+    "labels": [
+      "test",
+      "new"
+    ],
+    "title": "This is a test of the add news route",
+    "content": "News Summary",
+    "links": [
+      {
+        "rel": "self",
+        "href": "/news/NewsTest6"
+      }
+    ]
+  },
+  {
+    "created": "\/Date(1427458433411)\/",
+    "labels": [
+      "test",
+      "new"
+    ],
+    "title": "This is a test of the add news route",
+    "content": "News Summary",
+    "links": [
+      {
+        "rel": "self",
+        "href": "/news/NewsTest5"
+      }
+    ]
+  },
+  {
+    "created": "\/Date(1427458430787)\/",
+    "labels": [
+      "test",
+      "new"
+    ],
+    "title": "This is a test of the add news route",
+    "content": "News Summary",
+    "links": [
+      {
+        "rel": "self",
+        "href": "/news/NewsTest4"
+      }
+    ]
+  },
+  {
+    "created": "\/Date(1427458428179)\/",
+    "labels": [
+      "test",
+      "new"
+    ],
+    "title": "This is a test of the add news route",
+    "content": "News Summary",
+    "links": [
+      {
+        "rel": "self",
+        "href": "/news/NewsTest3"
+      }
+    ]
+  }
+]
