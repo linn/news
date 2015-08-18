@@ -179,7 +179,7 @@ describe('News Api', function () {
         });
         it('Should return correct json', function () {
             expect(res.json).to.have.been.calledWith({
-                posts: require('../data/expectedList.json'),
+                posts: require('../data/expectedListReverse.json'),
                 links: [{ rel: 'all', href: '' }]
             });
         });
