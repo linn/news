@@ -4,6 +4,7 @@ var _ = require('underscore');
 var factories = require('./factories');
 
 var newsMediaType = 'application/vnd.linn.news+json; version=1';
+var newsLabelsMediaType = 'application/vnd.linn.news-labels+json; version=1';
 
 function negotiate(req, res, data, statusCode) {
     if (req.header('Accept') === 'application/json' || req.accepts(newsMediaType) === newsMediaType) {
@@ -77,3 +78,15 @@ module.exports.listNewsArticles = function listNewsArticles(req, res, next) {
         }
     });
 };
+
+module.exports.listLabels = function listLabels(req, res, next) {
+    repository.listLabels(function (err, data) {
+        if (err) {
+            next(err);
+        } else {
+            res.set('Content-Type', newsLabelsMediaType);
+            res.json(data);
+            res.status(200);
+        }
+    });
+}
