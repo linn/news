@@ -3,6 +3,7 @@
 var config = require('linn-cloud-libs/config');
 var CloudRepository = require('linn-cloud-libs/dynamodb/repositories/cloudRepository').CloudRepository;
 var repository = new CloudRepository(config.dynamoDb.tables.news, "articleId");
+var _ = require('underscore');
 
 repository.listCurrentArticles = function scanDynamoDbForCurrentArticles(callback) {
     var params = {
@@ -21,6 +22,26 @@ repository.listCurrentArticles = function scanDynamoDbForCurrentArticles(callbac
             callback(err);
         } else {
             callback(null, data.Items);
+        }
+    });
+};
+repository.listLabels = function scanDynamoDbForAllLabels(callback) {
+    var params = {
+        TableName: config.dynamoDb.tables.news,
+        ExpressionAttributeNames: {
+            "#L": "labels"
+        },
+        ExpressionAttributeValues: {
+            ":ZERO": 0
+        },
+        ProjectionExpression: "#L",
+        FilterExpression: 'size(#L) > :ZERO'
+    };
+    this.docClient.scan(params, function (err, data) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, _.chain(data.Items).pluck('labels').flatten().countBy().value());
         }
     });
 };

@@ -10,18 +10,20 @@ chai.use(sinonChai);
 var expressTesting = require('linn-cloud-libs/testing/express');
 
 describe('News Api', function () {
-    var sut, loadCallbackArgs, saveCallbackArgs, removeCallbackArgs, listCallbackArgs, newsRepositoryStub;
+    var sut, loadCallbackArgs, saveCallbackArgs, removeCallbackArgs, listCallbackArgs, listLabelsArgs, newsRepositoryStub;
     beforeEach(function () {
         loadCallbackArgs = [];
         saveCallbackArgs = [];
         removeCallbackArgs = [];
         listCallbackArgs = [];
+        listLabelsArgs = [];
 
         newsRepositoryStub = {
             findById: sinon.spy(function loadNewsByIdFromStub(id, callback) { callback.apply(null, loadCallbackArgs); }),
             addOrReplace: sinon.spy(function addNewsByIdToStub(item, callback) { callback.apply(null, saveCallbackArgs); }),
             remove: sinon.spy(function removeByIdFromStub(id, callback) { callback.apply(null, removeCallbackArgs); }),
-            listCurrentArticles: sinon.spy(function listCurrentArticles(callback) { callback.apply(null, listCallbackArgs); })
+            listCurrentArticles: sinon.spy(function listCurrentArticles(callback) { callback.apply(null, listCallbackArgs); }),
+            listLabels: sinon.spy(function listLabels(callback) { callback.apply(null, listLabelsArgs); })
         };
 
         mockery.enable({ useCleanCache: true });
@@ -33,6 +35,32 @@ describe('News Api', function () {
     afterEach(function () {
         mockery.deregisterAll();
         mockery.disable();
+    });
+    describe('When getting labels', function () {
+        var next, res, req, expectedData;
+        beforeEach(function (done) {
+            expectedData = { label1: 1, label2: 2 };
+            listLabelsArgs[1] = expectedData;
+            req = expressTesting.generateRequestStub('application/vnd.linn.news-labels+json; version=1');
+            res = expressTesting.generateResponseStub(done);
+            next = function(error) {
+                res.statusCode = error.status;
+                done();
+            };
+            sut.listLabels(req, res, next);
+        });
+        it('Should list all the labels', function () {
+            expect(newsRepositoryStub.listLabels).to.have.been.called;
+        });
+        it('Should return Ok', function () {
+            expect(res.statusCode).to.eql(200);
+        });
+        it('Should call res.json', function () {
+            expect(res.json).to.have.been.called;
+        });
+        it('Should return correct json', function () {
+            expect(res.json).to.have.been.calledWith(expectedData);
+        });
     });
     describe('When adding a news article', function () {
         var next, res, req, expectedData;

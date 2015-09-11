@@ -22,7 +22,7 @@ module.exports.createModel = function createModel(req) {
 
     var postDate = new Date();
     var expirationDate = new Date();
-    expirationDate.setDate(postDate.getDate() + (req.body.lifespan || 30));
+    expirationDate.setDate(postDate.getDate() + (req.body.lifespan || 14));
     return {
         articleId: req.params.articleId,
         labels: _.isArray(req.body.labels) ? _.compact(req.body.labels) : [],
