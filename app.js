@@ -28,14 +28,16 @@ app.use(cookieParser());
 app.use('/news', express.static(path.join(__dirname, 'public')));
 app.use('/news/bower_components',  express.static(__dirname + '/bower_components'));
 
-// Application
+
 app.get('/news/create', newsRoutes.getCreateNewsArticle);
+app.get('/news/labels', newsRoutes.listLabels);
+app.post('/news/upload', s3Routes.uploadImage);
+
 app.get('/news/:articleId/edit', newsRoutes.getEditNewsArticle);
 app.get('/news/:articleId', newsRoutes.getNewsArticle);
-
-// API
-app.post('/news/upload', s3Routes.uploadImage);
 app.put('/news/:articleId', newsRoutes.putNewsArticle);
+app.delete('/news/:articleId', newsRoutes.removeNewsArticle);
+
 app.get('/news', newsRoutes.listNewsArticles);
 app.get('/notifications', notificationRoutes.get);
 
