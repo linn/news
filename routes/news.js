@@ -4,6 +4,7 @@ var _ = require('underscore');
 var factories = require('./factories');
 
 var newsMediaType = 'application/vnd.linn.news+json; version=1';
+var newsLabelsMediaType = 'application/vnd.linn.news-labels+json; version=1';
 
 function negotiate(req, res, data, statusCode) {
     if (req.header('Accept') === 'application/json' || req.accepts(newsMediaType) === newsMediaType) {
@@ -47,6 +48,16 @@ module.exports.getEditNewsArticle = function getEditNewsArticle(req, res, next) 
     });
 };
 
+module.exports.removeNewsArticle = function removeNewsArticle(req, res, next) {
+    repository.removeById(req.params.articleId, function (err, data) {
+        if (err) {
+            next(err);
+        } else {
+            res.sendStatus(204);
+        }
+    });
+};
+
 module.exports.putNewsArticle = function putNewsArticle(req, res, next) {
     var model;
     try {
@@ -77,3 +88,15 @@ module.exports.listNewsArticles = function listNewsArticles(req, res, next) {
         }
     });
 };
+
+module.exports.listLabels = function listLabels(req, res, next) {
+    repository.listLabels(function (err, data) {
+        if (err) {
+            next(err);
+        } else {
+            res.set('Content-Type', newsLabelsMediaType);
+            res.json(data);
+            res.status(200);
+        }
+    });
+}

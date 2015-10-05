@@ -69,9 +69,9 @@ describe('Factories', function () {
             it('Should populate post date', function () {
                 expect(new Date(model.date)).to.equalDate(new Date());
             });
-            it('Should populate expiration date 30 days after post date', function () {
+            it('Should populate expiration date 14 days after post date', function () {
                 var expectedExpiration = new Date(model.date);
-                expectedExpiration.setDate(expectedExpiration.getDate() + 30);
+                expectedExpiration.setDate(expectedExpiration.getDate() + 14);
                 expect(new Date(model.expiration)).to.equalDate(expectedExpiration);
             });
         });
