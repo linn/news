@@ -21,7 +21,7 @@ describe('News Api', function () {
         newsRepositoryStub = {
             findById: sinon.spy(function loadNewsByIdFromStub(id, callback) { callback.apply(null, loadCallbackArgs); }),
             addOrReplace: sinon.spy(function addNewsByIdToStub(item, callback) { callback.apply(null, saveCallbackArgs); }),
-            remove: sinon.spy(function removeByIdFromStub(id, callback) { callback.apply(null, removeCallbackArgs); }),
+            removeById: sinon.spy(function removeByIdFromStub(id, callback) { callback.apply(null, removeCallbackArgs); }),
             listCurrentArticles: sinon.spy(function listCurrentArticles(callback) { callback.apply(null, listCallbackArgs); }),
             listLabels: sinon.spy(function listLabels(callback) { callback.apply(null, listLabelsArgs); })
         };
@@ -94,6 +94,25 @@ describe('News Api', function () {
         });
         it('Should set Location', function () {
             expect(res.set).to.have.been.calledWith('Location', '/news/TestArticle');
+        });
+    });
+    describe('When removing a news article', function () {
+        var next, res, req, articleId;
+        beforeEach(function (done) {
+            articleId = 'TestRemove';
+            req = expressTesting.generateRequestStub('application/json', { articleId: articleId });
+            res = expressTesting.generateResponseStub(done);
+            next = function (error) {
+                res.statusCode = error.status;
+                done();
+            };
+            sut.removeNewsArticle(req, res, next);
+        });
+        it('Should remove news article from repository', function () {
+            expect(newsRepositoryStub.removeById).to.have.been.calledWith(articleId);
+        });
+        it('Should return no content', function () {
+            expect(res.statusCode).to.eql(204);
         });
     });
     describe('When getting the create news article page', function () {

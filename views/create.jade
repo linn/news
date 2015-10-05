@@ -14,14 +14,23 @@ block content
             label(for="title") Title
             input#title.form-control(placeholder="Enter Title", value=title, autocomplete="off")
         div.form-group
-            label(for="labels") Labels
-            input#labels.form-control(placeholder="Labels", value=labels)
+            label(for="labels") Optional Label
+            input#labels.form-control(placeholder="Add an optional label to the article", value=labels, list="predefinedlabels")
+        datalist#predefinedlabels
+            option(value="baby")
+            option(value="company")
+            option(value="birthday")
+            option(value="anniversary")
+            option(value="wedding")
+            option(value="vacancy")
         div.form-group
             label(for="summary") Short Summary
-            textarea#summary.form-control(placeholder="Short summary of news article", autocomplete="off")= summary
+            textarea#summary.form-control(placeholder="Short summary of article", autocomplete="off")= summary
         div.form-group
             label(for="news-content-editor") Content
             div#news-content-editor= content
+        div.form-group
+            button(type=button,data-loading-text="Deleting...")#delete.btn.btn-danger.pull-left Delete
         div.form-group
             button(type=submit,data-loading-text="Saving...")#submit.btn.btn-success.pull-right Save
     script(src="/news/javascripts/createNewsArticle.js",type="text/javascript")
