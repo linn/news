@@ -48,6 +48,16 @@ module.exports.getEditNewsArticle = function getEditNewsArticle(req, res, next) 
     });
 };
 
+module.exports.removeNewsArticle = function removeNewsArticle(req, res, next) {
+    repository.removeById(req.params.articleId, function (err, data) {
+        if (err) {
+            next(err);
+        } else {
+            res.sendStatus(204);
+        }
+    });
+};
+
 module.exports.putNewsArticle = function putNewsArticle(req, res, next) {
     var model;
     try {
