@@ -1,23 +1,5 @@
-(function ($, Bloodhound) {
+(function ($) {
     "use strict";
-
-    var engine = new Bloodhound({
-        prefetch: {
-            url: "/news/labels",
-            cache: false,
-            transform: function (response) {
-                return Object.keys(response);
-            }
-        },
-        datumTokenizer: Bloodhound.tokenizers.whitespace,
-        queryTokenizer: Bloodhound.tokenizers.whitespace
-    });
-
-    engine.initialize();
-
-    $('#labels').tokenfield({
-        typeahead: [ null, { source: engine.ttAdapter() }]
-    });
 
     $('#news-content-editor').markdownEditor({
         imageUpload: true,
@@ -56,4 +38,25 @@
             $button.button('reset');
         });
     });
-})($, Bloodhound);
+
+    $('#delete').on('click', function (e) {
+        e.preventDefault();
+        var $button = $('#delete').button('loading');
+        var title = $('#title').val();
+        var uri = '/news/' + encodeURIComponent(title.replace(/ /g, '_').toLowerCase());
+        var response = $.ajax({
+            method: 'DELETE',
+            url: uri,
+            contentType: 'application/json'
+        });
+        response.done(function () {
+            window.location.href = response.getResponseHeader('Location');
+        });
+        response.fail(function( jqXHR, textStatus, errorThrown ) {
+            window.alert(errorThrown);
+        });
+        response.always(function () {
+            $button.button('reset');
+        });
+    });
+})($);
