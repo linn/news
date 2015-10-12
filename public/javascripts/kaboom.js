@@ -421,7 +421,7 @@
 
                     if (post.labels.length) {
                         // only support displaying the first label
-                        label = '<span class="label label-' + post.labels[0] + '">' + post.labels[0] + '</span>';
+                        label = '<span class="label label-info label-' + post.labels[0] + '">' + post.labels[0] + '</span>';
                     }
 
                     if (self.options.style == 'default') {
