@@ -32,23 +32,28 @@ TARGET_HOST=${2}
 
 `accept text/html`
 
+
 `GET /news/create` - Will return an HTML page in which you can create a news article
+
 `GET /news/:articleId/edit` - Will return an HTML page in which you can edit an existing news article
+
 `GET /news/:articleId` - Will return an HTML rendering of the news article
 
 ### API
 
 `accept application/json`
 
+
 `GET /news/labels` - Return JSON array of labels in use
+
 `POST /news/upload` - Multi Part FORM Post capability to upload an image for use in an article
+
 `GET /news/:articleId` - Return JSON news article
+
 `PUT /news/:articleId` - Replace a news article with this
+
 `DELETE /news/:articleId` - Remove a news article (referenced images will not be removed)
+
 `GET /news` - List most recent news articles with summaries; use `count` attribute to request a different number than the default
+
 `GET /notifications` - List most recent news articles in the shape of notifications
-
-```
-
-
-```
