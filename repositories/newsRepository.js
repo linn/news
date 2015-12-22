@@ -1,12 +1,12 @@
 "use strict";
 
-var config = require('linn-cloud-libs/config');
-var CloudRepository = require('linn-cloud-libs/dynamodb/repositories/cloudRepository').CloudRepository;
-var repository = new CloudRepository(config.dynamoDb.tables.news, "articleId");
-var _ = require('underscore');
+let config = require('linn-cloud-libs/config');
+let Repository = require('repository-dynamodb');
+let repository = new Repository(config.awsRegion, config.dynamoDb.tables.news, "articleId");
+let _ = require('underscore');
 
 repository.listCurrentArticles = function scanDynamoDbForCurrentArticles(callback) {
-    var params = {
+    let params = {
         TableName: config.dynamoDb.tables.news,
         ExpressionAttributeNames: {
             "#D": "date",
@@ -26,7 +26,7 @@ repository.listCurrentArticles = function scanDynamoDbForCurrentArticles(callbac
     });
 };
 repository.listLabels = function scanDynamoDbForAllLabels(callback) {
-    var params = {
+    let params = {
         TableName: config.dynamoDb.tables.news,
         ExpressionAttributeNames: {
             "#L": "labels"
