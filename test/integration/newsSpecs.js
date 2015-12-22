@@ -19,9 +19,9 @@ describe('News Api', function () {
         listLabelsArgs = [];
 
         newsRepositoryStub = {
-            findById: sinon.spy(function loadNewsByIdFromStub(id, callback) { callback.apply(null, loadCallbackArgs); }),
+            findBy: sinon.spy(function loadNewsByIdFromStub(id, callback) { callback.apply(null, loadCallbackArgs); }),
             addOrReplace: sinon.spy(function addNewsByIdToStub(item, callback) { callback.apply(null, saveCallbackArgs); }),
-            removeById: sinon.spy(function removeByIdFromStub(id, callback) { callback.apply(null, removeCallbackArgs); }),
+            removeBy: sinon.spy(function removeByFromStub(id, callback) { callback.apply(null, removeCallbackArgs); }),
             listCurrentArticles: sinon.spy(function listCurrentArticles(callback) { callback.apply(null, listCallbackArgs); }),
             listLabels: sinon.spy(function listLabels(callback) { callback.apply(null, listLabelsArgs); })
         };
@@ -109,7 +109,7 @@ describe('News Api', function () {
             sut.removeNewsArticle(req, res, next);
         });
         it('Should remove news article from repository', function () {
-            expect(newsRepositoryStub.removeById).to.have.been.calledWith(articleId);
+            expect(newsRepositoryStub.removeBy).to.have.been.calledWith(articleId);
         });
         it('Should return no content', function () {
             expect(res.statusCode).to.eql(204);
@@ -144,7 +144,7 @@ describe('News Api', function () {
             sut.getEditNewsArticle(req, res, next);
         });
         it('Should get a news article from the repository', function () {
-            expect(newsRepositoryStub.findById).to.have.been.called;
+            expect(newsRepositoryStub.findBy).to.have.been.called;
         });
         it('Should render news article', function () {
             expect(res.render).to.have.been.calledWith("create", {
@@ -173,7 +173,7 @@ describe('News Api', function () {
             sut.getNewsArticle(req, res, next);
         });
         it('Should get a news article from the repository', function () {
-            expect(newsRepositoryStub.findById).to.have.been.called;
+            expect(newsRepositoryStub.findBy).to.have.been.called;
         });
         it('Should render news article', function () {
             expect(res.render).to.have.been.calledWith("news", {

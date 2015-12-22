@@ -1,0 +1,5 @@
+## Directory-based project format:
+
+node_modules
+*/.idea/workspace.xml
+workspace.xml

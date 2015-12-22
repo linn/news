@@ -18,9 +18,6 @@ describe('Notifications Api', function () {
         listCallbackArgs = [];
 
         newsRepositoryStub = {
-            findById: sinon.spy(function loadNewsByIdFromStub(id, callback) { callback.apply(null, loadCallbackArgs); }),
-            addOrReplace: sinon.spy(function addNewsByIdToStub(item, callback) { callback.apply(null, saveCallbackArgs); }),
-            remove: sinon.spy(function removeByIdFromStub(id, callback) { callback.apply(null, removeCallbackArgs); }),
             listCurrentArticles: sinon.spy(function listCurrentArticles(callback) { callback.apply(null, listCallbackArgs); })
         };
 

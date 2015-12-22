@@ -17,7 +17,7 @@ function negotiate(req, res, data, statusCode) {
 }
 
 module.exports.getNewsArticle = function getNewsArticle(req, res, next) {
-    repository.findById(req.params.articleId, function (err, data) {
+    repository.findBy(req.params.articleId, function (err, data) {
         if (err) {
             next(err);
         } else if (!data) {
@@ -35,7 +35,7 @@ module.exports.getCreateNewsArticle = function getCreateNewsArticle(req, res) {
 };
 
 module.exports.getEditNewsArticle = function getEditNewsArticle(req, res, next) {
-    repository.findById(req.params.articleId, function (err, data) {
+    repository.findBy(req.params.articleId, function (err, data) {
         if (err) {
             next(err);
         } else if (!data) {
@@ -49,7 +49,7 @@ module.exports.getEditNewsArticle = function getEditNewsArticle(req, res, next) 
 };
 
 module.exports.removeNewsArticle = function removeNewsArticle(req, res, next) {
-    repository.removeById(req.params.articleId, function (err, data) {
+    repository.removeBy(req.params.articleId, function (err, data) {
         if (err) {
             next(err);
         } else {
