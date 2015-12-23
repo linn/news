@@ -13,5 +13,6 @@ module.exports = {
         buckets: {
             newsAttachments: "linn.cloud.news.attachments"
         }
-    }
+    },
+    reset: false
 };
