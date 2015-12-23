@@ -83,7 +83,7 @@ echo "Priority: optional" >> ${DEBIAN}/control
 echo "Architecture: amd64" >> ${DEBIAN}/control
 INSTALLED_SIZE=`du -s ${SYSROOT}`
 echo "Installed-Size: ${INSTALLED_SIZE}" >> ${DEBIAN}/control
-echo "Depends: nodejs (>= 0.12)" >> ${DEBIAN}/control
+echo "Depends: nodejs (>= 4.0)" >> ${DEBIAN}/control
 echo "Maintainer: IT  <it.developers@linn.co.uk>" >> ${DEBIAN}/control
 echo "Description: Linn internal news service" >> ${DEBIAN}/control
 
