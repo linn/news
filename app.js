@@ -46,7 +46,7 @@ app.get('/ping', pingApi.ping);
 
 if (config.reset) {
     app.delete('/reset', function (req, res, next) {
-        config.reset(function(err) {
+        require('./routes/reset').reset(function(err) {
             if (err) {
                 next(err);
             } else {
