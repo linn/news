@@ -1,4 +1,43 @@
-# Product Cloud Storage
+# Development Permissions
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt1439206576000",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:*"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:eu-west-1:545349016803:table/linn.cloud.news.int"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::linn.cloud.news.attachments.int"
+            ]
+        },
+        {
+            "Sid": "Stmt1439206617000",
+            "Effect": "Allow",
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::linn.cloud.news.attachments.int/*"
+            ]
+        }
+    ]
+}
+```
+
+# Production Attachment Storage
 
 1. Create S3 Bucket: linn.cloud.news.attachments
 
