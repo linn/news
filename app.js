@@ -4,10 +4,10 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var requestLogger = require('morgan');
-var log = require('linn-cloud-libs/logger');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var log = require('./logger');
 var config = require('./config');
 var newsRoutes = require('./routes/news');
 var s3Routes = require('./routes/s3');
