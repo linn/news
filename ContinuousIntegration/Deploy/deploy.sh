@@ -1,6 +1,7 @@
 #!/bin/bash
 
-TARGET_HOST=${1}
+CONFIGURATION=${1}
+TARGET_HOST=${2}
 PACKAGE_NAME="news-service"
 
 if [ ${CONFIGURATION} = "int" ]
