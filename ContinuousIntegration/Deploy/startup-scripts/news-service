@@ -69,11 +69,6 @@ NAME=nodejs                                   # name of the node.js executable
 DAEMON=/usr/bin/$NAME                 # this SHOULD POINT TO where your node executable is
 
 APPLOG_FILE=/var/log/news-service/news-service.log
-
-PROCESS_TITLE="newsService"
-NODE_ENV=release
-PORT=60350
-
 #
 #                                                                              #
 #                   END </MODIFY TO REFLECT YOUR SETTINGS>                     #

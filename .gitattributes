@@ -8,13 +8,16 @@
 .idea export-ignore
 
 # configuration
-/config export-ignore
 /package.json export-ignore
 .jshintrc export-ignore
+
+# Not for release
+routes/libs/ddl.js
 
 # scripts
 ContinuousIntegration export-ignore
 deploy.sh export-ignore
+package.sh export-ignore
 
 # test
 test export-ignore

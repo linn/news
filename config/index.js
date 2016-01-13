@@ -2,8 +2,6 @@
 
 let config = require('12factor-config');
 let dotenv = require('dotenv');
-let fs = require('fs');
-let path = require('path');
 
 dotenv.load();
 

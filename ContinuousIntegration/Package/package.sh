@@ -40,17 +40,12 @@ mkdir -p ${SYSROOT}/etc/init.d
 echo "Packaging Template"
 git archive --format=tar origin/${BRANCH} | tar --directory=${TARGET_DIR} -xf -
 
-# Copy Environment
-echo "Copying Environment"
-mkdir -p ${TARGET_DIR}/config
-git archive --format=tar origin/${BRANCH}:config ${CONFIGURATION}.js | tar --directory=${TARGET_DIR}/config -xf -
-
 # Only copy ddl.js if deploying to int
 if [ ${CONFIGURATION} = "int" ]
 then
-	echo "Copying DDL library"
-	mkdir -p ${TARGET_DIR}/config/libs
-	git archive --format=tar origin/${BRANCH}:routes/libs ddl.js | tar --directory=${TARGET_DIR}/config/libs -xf -
+       echo "Copying DDL library"
+       mkdir -p ${TARGET_DIR}/config/libs
+       git archive --format=tar origin/${BRANCH}:routes/libs ddl.js | tar --directory=${TARGET_DIR}/routes/libs -xf -
     PACKAGE_NAME="news-service-int"
 fi
 
@@ -59,8 +54,8 @@ echo "Creating ping resources"
 echo "{ \"timeStamp\": \"${TIMESTAMP}\", \"config\": \"${CONFIGURATION}\", \"branch\": \"${BRANCH}\", \"build\": \"${BUILD_NUMBER}\", \"commit\": \"${GIT_COMMIT}\" }" > ${TARGET_DIR}/ping.json
 
 echo "Copying Init Script"
-git archive --format=tar origin/${BRANCH}:ContinuousIntegration/Deploy/startup-scripts news-service.${CONFIGURATION} | tar --directory=${SYSROOT}/etc/init.d/ -xf -
-mv ${SYSROOT}/etc/init.d/news-service.${CONFIGURATION} ${SYSROOT}/etc/init.d/news-service
+git archive --format=tar origin/${BRANCH}:ContinuousIntegration/Deploy/startup-scripts news-service | tar --directory=${SYSROOT}/etc/init.d/ -xf -
+mv ${SYSROOT}/etc/init.d/news-service ${SYSROOT}/etc/init.d/news-service
 chmod +x ${SYSROOT}/etc/init.d/news-service
 
 echo "Create preinst file"
