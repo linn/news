@@ -58,6 +58,7 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
 DAEMON_ARGS="/opt/linn/news-service/bin/www"
 DESC="News Service"
 NODEUSER=news-service:news-service
+source ~news-service/.env
 LOCAL_VAR_RUN=/usr/local/var/run            # in case the init script is run by non-root user, you need to
                                             # indicate a directory writeable by $NODEUSER to store the PID file
                                             # NB : 1) /usr/local/var/run does not exist by DEFAULT. Either create it
@@ -122,7 +123,9 @@ do_start()
 
 	# Redirects stdout and sterr to APPLOG_FILE
         start-stop-daemon --start --quiet --chuid $NODEUSER --make-pidfile --pidfile $PIDFILE --background     \
-                --startas /bin/bash -- -c "exec /usr/bin/env PROCESS_TITLE=$PROCESS_TITLE PORT=$PORT NODE_ENV=$NODE_ENV $DAEMON $DAEMON_ARGS >> $APPLOG_FILE 2>&1" \
+                --startas /bin/bash -- -c "exec /usr/bin/env \
+                PROCESS_TITLE=$PROCESS_TITLE PORT=$PORT NODE_ENV=$NODE_ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+                AWS_REGION=$AWS_REGION NEWS_TABLE_NAME=$NEWS_TABLE_NAME NEWS_ATTACHMENTS_BUCKET=$NEWS_ATTACHMENTS_BUCKET $DAEMON $DAEMON_ARGS >> $APPLOG_FILE 2>&1" \
                 || { [ "$VERBOSE" != no ] && log_daemon_msg  "  --->  could not be start $DESC" "$INIT_SCRIPT_NAME_NOEXT"; return 2; }
 	# This does not redirect output
 	#start-stop-daemon --start --quiet --chuid $NODEUSER --make-pidfile --pidfile $PIDFILE --background --exec $DAEMON -- \
