@@ -4,3 +4,4 @@
 workspace.xml
 test-reports.xml
 *.log
+.env

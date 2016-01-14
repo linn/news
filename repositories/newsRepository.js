@@ -1,13 +1,13 @@
 "use strict";
 
-let config = require('linn-cloud-libs/config');
+let config = require('../config');
 let Repository = require('repository-dynamodb');
-let repository = new Repository(config.awsRegion, config.dynamoDb.tables.news, "articleId");
+let repository = new Repository(config.awsRegion, config.newsTableName, "articleId");
 let _ = require('underscore');
 
 repository.listCurrentArticles = function scanDynamoDbForCurrentArticles(callback) {
     let params = {
-        TableName: config.dynamoDb.tables.news,
+        TableName: config.newsTableName,
         ExpressionAttributeNames: {
             "#D": "date",
             "#E": "expiration"
@@ -27,7 +27,7 @@ repository.listCurrentArticles = function scanDynamoDbForCurrentArticles(callbac
 };
 repository.listLabels = function scanDynamoDbForAllLabels(callback) {
     let params = {
-        TableName: config.dynamoDb.tables.news,
+        TableName: config.newsTableName,
         ExpressionAttributeNames: {
             "#L": "labels"
         },
