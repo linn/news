@@ -1,6 +1,7 @@
 "use strict";
-var aws = require('aws-sdk');
-var _ = require('underscore');
+let aws = require('aws-sdk');
+let _ = require('underscore');
+let log = require('../../logger');
 
 module.exports.Ddl = function Ddl(config) {
 
@@ -63,7 +64,7 @@ module.exports.Ddl = function Ddl(config) {
         var params = {
             TableName: tableName
         };
-        config.logger.info('Deleting table ' + tableName);
+        log.info('Deleting table ' + tableName);
         dynamodb.deleteTable(params, function (err) {
             if (err) {
                 if (err.code === 'ResourceNotFoundException') {
@@ -138,7 +139,7 @@ module.exports.Ddl = function Ddl(config) {
                 AttributeType: 'S'
             });
         }
-        config.logger.info('Creating table ' + tableName);
+        log.info('Creating table ' + tableName);
         dynamodb.createTable(params, function (err) {
             if (err) {
                 callback(err);
@@ -158,7 +159,7 @@ module.exports.Ddl = function Ddl(config) {
                 Quiet: true
             }
         };
-        config.logger.info('Deleting ' + keys.length + ' objects from ' + name);
+        log.info('Deleting ' + keys.length + ' objects from ' + name);
         s3.deleteObjects(params, callback);
     }
 
@@ -178,7 +179,7 @@ module.exports.Ddl = function Ddl(config) {
                 ]
             })
         };
-        config.logger.info('Setting bucket policy for ' + name);
+        log.info('Setting bucket policy for ' + name);
         s3.putBucketPolicy(params, callback);
     }
 
@@ -186,7 +187,7 @@ module.exports.Ddl = function Ddl(config) {
         var params = {
             Bucket: name
         };
-        config.logger.info('Listing objects in bucket ' + name);
+        log.info('Listing objects in bucket ' + name);
         s3.listObjects(params, function (err, data) {
             if (err && err.code === 'NoSuchBucket') {
                 callback();
@@ -195,7 +196,7 @@ module.exports.Ddl = function Ddl(config) {
             } else {
                 var keys = _.pluck(data.Contents, 'Key');
                 if (keys.length === 0) {
-                    config.logger.info('Bucket ' + name + ' is empty');
+                    log.info('Bucket ' + name + ' is empty');
                     callback();
                 } else {
                     deleteS3Objects(name, keys, function () {
@@ -216,7 +217,7 @@ module.exports.Ddl = function Ddl(config) {
             if (err) {
                 callback(err);
             } else {
-                config.logger.info('Deleting bucket ' + name);
+                log.info('Deleting bucket ' + name);
                 s3.deleteBucket(params, function (err) {
                     if (err && err.code === 'NoSuchBucket') {
                         callback();
@@ -234,7 +235,7 @@ module.exports.Ddl = function Ddl(config) {
         var params = {
             Bucket: name
         };
-        config.logger.info('Creating bucket ' + name);
+        log.info('Creating bucket ' + name);
         s3.createBucket(params, function () {
             setReadonlyPermissionsToAnonUsers(name, callback);
         });
