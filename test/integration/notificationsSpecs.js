@@ -7,7 +7,7 @@ var mockery = require('mockery');
 var expect = chai.expect;
 chai.use(sinonChai);
 
-var expressTesting = require('linn-cloud-libs/testing/express');
+var expressTesting = require('./expressTesting');
 
 describe('Notifications Api', function () {
     var sut, loadCallbackArgs, saveCallbackArgs, removeCallbackArgs, listCallbackArgs, newsRepositoryStub;

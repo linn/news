@@ -17,7 +17,6 @@
     "dotenv": "^1.2.0",
     "express": "~4.11.1",
     "jade": "~1.9.1",
-    "linn-cloud-libs": "git+ssh://it.linn.co.uk:home/git/linn-cloud-libs.git",
     "moment": "^2.9.0",
     "morgan": "~1.5.1",
     "multiparty": "^4.1.1",
