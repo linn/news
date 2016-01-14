@@ -9,6 +9,7 @@
 
 # configuration
 /package.json export-ignore
+/bower.json export-ignore
 .jshintrc export-ignore
 
 # Not for release
