@@ -43,8 +43,8 @@ git archive --format=tar origin/${BRANCH} | tar --directory=${TARGET_DIR} -xf -
 # Libs
 echo "Downloading dependant libraries"
 npm install
-cp -Rpuv node_modules ${TARGET_DIR}
-cp -Rpuv bower_components ${TARGET_DIR}
+cp -Rpu node_modules ${TARGET_DIR}
+cp -Rpu bower_components ${TARGET_DIR}
 
 # Only copy ddl.js if deploying to int
 if [ ${CONFIGURATION} = "int" ]
