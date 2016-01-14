@@ -3,7 +3,7 @@
 let config = require('12factor-config');
 let dotenv = require('dotenv');
 
-dotenv.load();
+dotenv.config({silent: true});
 
 let cfg = config({
     stackTraceOnError: {
