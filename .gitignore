@@ -5,3 +5,5 @@ workspace.xml
 test-reports.xml
 *.log
 .env
+node_modules
+bower_components
