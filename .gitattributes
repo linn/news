@@ -11,9 +11,7 @@
 /package.json export-ignore
 /bower.json export-ignore
 .jshintrc export-ignore
-
-# Not for release
-routes/libs/ddl.js
+.env
 
 # scripts
 ContinuousIntegration export-ignore
@@ -22,6 +20,3 @@ package.sh export-ignore
 
 # test
 test export-ignore
-
-# documentation
-SolutionItems export-ignore

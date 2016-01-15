@@ -46,15 +46,6 @@ npm install
 cp -Rpu node_modules ${TARGET_DIR}
 cp -Rpu bower_components ${TARGET_DIR}
 
-# Only copy ddl.js if deploying to int
-if [ ${CONFIGURATION} = "int" ]
-then
-       echo "Copying DDL library"
-       mkdir -p ${TARGET_DIR}/config/libs
-       git archive --format=tar origin/${BRANCH}:routes/libs ddl.js | tar --directory=${TARGET_DIR}/routes/libs -xf -
-    PACKAGE_NAME="news-service-int"
-fi
-
 # Create ping resources
 echo "Creating ping resources"
 echo "{ \"timeStamp\": \"${TIMESTAMP}\", \"config\": \"${CONFIGURATION}\", \"branch\": \"${BRANCH}\", \"build\": \"${BUILD_NUMBER}\", \"commit\": \"${GIT_COMMIT}\" }" > ${TARGET_DIR}/ping.json
