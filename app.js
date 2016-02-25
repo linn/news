@@ -45,18 +45,6 @@ app.get('/notifications', notificationRoutes.get);
 // Ping
 app.get('/ping', pingApi.ping);
 
-if (config.reset) {
-    app.delete('/reset', function (req, res, next) {
-        require('./routes/reset').reset(function(err) {
-            if (err) {
-                next(err);
-            } else {
-                res.sendStatus(204);
-            }
-        });
-    });
-}
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

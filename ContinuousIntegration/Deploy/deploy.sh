@@ -4,13 +4,6 @@ CONFIGURATION=${1}
 TARGET_HOST=${2}
 PACKAGE_NAME="news-service"
 
-if [ ${CONFIGURATION} = "int" ]
-then
-    echo "Overriding TARGET_HOST"
-    TARGET_HOST='apphost-int-linux'
-    PACKAGE_NAME="news-service-int"
-fi
-
 echo "*************************************"
 echo "*"
 echo "* Configuration : ${CONFIGURATION}"
