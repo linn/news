@@ -51,7 +51,7 @@ echo "Creating ping resources"
 echo "{ \"timeStamp\": \"${TIMESTAMP}\", \"config\": \"${CONFIGURATION}\", \"branch\": \"${BRANCH}\", \"build\": \"${BUILD_NUMBER}\", \"commit\": \"${GIT_COMMIT}\" }" > ${TARGET_DIR}/ping.json
 
 echo "Copying Init Script"
-git archive --format=tar origin/${BRANCH}:ContinuousIntegration/Deploy/startup-scripts news-service | tar --directory=${SYSROOT}/etc/init.d/ -xf -
+git archive --format=tar origin/${BRANCH}:ContinuousIntegration/Package/init.d news-service | tar --directory=${SYSROOT}/etc/init.d/ -xf -
 chmod +x ${SYSROOT}/etc/init.d/news-service
 
 echo "Create preinst file"
