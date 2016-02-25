@@ -9,7 +9,7 @@ BUILD_NUMBER=${2}
 
 GIT_COMMIT=`git show-ref origin/${BRANCH} | grep remotes | cut -d ' ' -f 1`
 TIMESTAMP=`date --utc +%FT%TZ`
-PACKAGE_NAME="news-service"
+PACKAGE_NAME="news-service"-${BRANCH}
 PACKAGE_VERSION="${BUILD_NUMBER}"
 
 echo "*************************************"
@@ -82,5 +82,5 @@ fakeroot -- tar czf ../control.tar.gz *
 popd
 
 echo 2.0 > debian-binary
-fakeroot -- ar r ../${PACKAGE_NAME}-${BRANCH}_${PACKAGE_VERSION}.deb debian-binary control.tar.gz data.tar.gz
+fakeroot -- ar r ../news-service.deb debian-binary control.tar.gz data.tar.gz
 popd
