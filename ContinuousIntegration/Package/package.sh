@@ -82,5 +82,5 @@ fakeroot -- tar czf ../control.tar.gz *
 popd
 
 echo 2.0 > debian-binary
-fakeroot -- ar r ../news-service_${PACKAGE_VERSION}~${BRANCH}.deb debian-binary control.tar.gz data.tar.gz
+fakeroot -- ar r ../${PACKAGE_NAME}_${PACKAGE_VERSION}~${BRANCH}.deb debian-binary control.tar.gz data.tar.gz
 popd
