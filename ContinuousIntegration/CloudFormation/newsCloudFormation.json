@@ -1,0 +1,101 @@
+{
+  "Description": "News Service Application",
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Resources": {
+    "dynamodblinncloudnews": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "articleId",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "articleId",
+            "KeyType": "HASH"
+          }
+        ],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": "1",
+          "WriteCapacityUnits": "1"
+        }
+      }
+    },
+    "s3linncloudnewsattachments": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "AccessControl": "Private",
+        "VersioningConfiguration": {
+          "Status": "Suspended"
+        }
+      }
+    },
+    "s3linncloudnewsattachmentspolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "s3linncloudnewsattachments"
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "AllowPublicRead",
+              "Effect": "Allow",
+              "Principal": "*",
+              "Action": "s3:GetObject",
+              "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "s3linncloudnewsattachments" } , "/*" ]]}
+            }
+          ]
+        }
+      }
+    },
+    "newsUser" : {
+      "Type" : "AWS::IAM::User",
+      "Properties" : {
+        "Path" : "/",
+        "Policies" : [ {
+          "PolicyName" : "accesstonewss3anddynamodb",
+          "PolicyDocument" : {
+            "Version": "2012-10-17",
+            "Statement" : [ {
+              "Effect" : "Allow",
+              "Action" : [ "dynamodb:*" ],
+              "Resource"  : { "Fn::Join" :  [ "", [ "arn:aws:dynamodb:", { "Ref" : "AWS::Region" }, ":545349016803:table/", { "Ref" : "dynamodblinncloudnews" } ]]}
+            }, {
+              "Effect" : "Allow",
+              "Action" : [ "s3:*" ],
+              "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "s3linncloudnewsattachments" } , "/*" ]]}
+            } ]
+          }
+        } ]
+      }
+    },
+    "newsAccesskey" : {
+      "Type" : "AWS::IAM::AccessKey",
+      "Properties" : {
+        "UserName" : { "Ref" : "newsUser" }
+      }
+    }
+  },
+  "Outputs" : {
+    "NewsAttachmentsBucket" : {
+      "Description" : "The S3 Bucket where news attachments are stored",
+      "Value" : { "Ref" : "s3linncloudnewsattachments" }
+    },
+    "NewsTable": {
+      "Description": "The DynamoDb table name where news articles are stored",
+      "Value": { "Ref": "dynamodblinncloudnews" }
+    },
+    "AccessKey" : {
+      "Value" : { "Ref" : "newsAccesskey" }
+    },
+    "SecretKey" : {
+      "Value" : {
+        "Fn::GetAtt" : [ "newsAccesskey", "SecretAccessKey" ]
+      }
+    }
+  }
+}
