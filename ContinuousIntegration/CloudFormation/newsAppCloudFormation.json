@@ -1,0 +1,53 @@
+{
+  "Description": "News Application",
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters" : {
+    "newsTableName" : {
+      "Type" : "String",
+      "Description" : "DynamoDB Table Name to store news articles"
+    },
+    "newsAttachmentsBucket" : {
+      "Type" : "String",
+      "Description" : "S3 Bucket to store news article attachements"
+    }
+  },
+  "Resources": {
+    "newsUser" : {
+      "Type" : "AWS::IAM::User",
+      "Properties" : {
+        "Path" : "/",
+        "Policies" : [ {
+          "PolicyName" : "accesstonewss3anddynamodb",
+          "PolicyDocument" : {
+            "Version": "2012-10-17",
+            "Statement" : [ {
+              "Effect" : "Allow",
+              "Action" : [ "dynamodb:Scan", "dynamodb:GetItem", "dynamodb:PutItem", "dynamoDb:DeleteItem" ],
+              "Resource"  : { "Fn::Join" :  [ "", [ "arn:aws:dynamodb:", { "Ref" : "AWS::Region" }, ":545349016803:table/", { "Ref" : "newsTableName" } ]]}
+            }, {
+              "Effect" : "Allow",
+              "Action" : [ "s3:PutObject" ],
+              "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "newsAttachmentsBucket" } , "/*" ]]}
+            } ]
+          }
+        } ]
+      }
+    },
+    "newsAccesskey" : {
+      "Type" : "AWS::IAM::AccessKey",
+      "Properties" : {
+        "UserName" : { "Ref" : "newsUser" }
+      }
+    }
+  },
+  "Outputs" : {
+    "AccessKey" : {
+      "Value" : { "Ref" : "newsAccesskey" }
+    },
+    "SecretKey" : {
+      "Value" : {
+        "Fn::GetAtt" : [ "newsAccesskey", "SecretAccessKey" ]
+      }
+    }
+  }
+}
