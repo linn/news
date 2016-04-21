@@ -25,10 +25,9 @@ test: build $(PINGJSON)
 
 
 $(DOCKER): build
-	docker build -t $(SERVICE_HANDSHAKE_DOCKER_NAME):$(TRAVIS_BUILD_NUMBER) .
+	docker build -t $(DOCKER):$(TRAVIS_BUILD_NUMBER) .
 	
-all-the-dockers: $(NEWS_DOCKER)
-	$(DOCKER)
+all-the-dockers: $(DOCKER)
 
 docker-tag:
 	$(call tag_docker, $(DOCKER))
