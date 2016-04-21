@@ -39,16 +39,16 @@
           "Ref": "s3linncloudnewsattachments"
         },
         "PolicyDocument": {
-          "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Sid": "AllowPublicRead",
-              "Effect": "Allow",
-              "Principal": "*",
-              "Action": "s3:GetObject",
-              "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "s3linncloudnewsattachments" } , "/*" ]]}
-            }
-          ]
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Sid": "AllowPublicRead",
+                "Effect": "Allow",
+                "Principal": "*",
+                "Action": "s3:GetObject",
+                "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "s3linncloudnewsattachments" } , "/*" ]]}
+              }
+            ]
         }
       }
     }
