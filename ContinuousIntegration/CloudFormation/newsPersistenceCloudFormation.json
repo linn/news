@@ -54,11 +54,11 @@
     }
   },
   "Outputs" : {
-    "NewsAttachmentsBucket" : {
+    "newsAttachmentsBucket" : {
       "Description" : "The S3 Bucket where news attachments are stored",
       "Value" : { "Ref" : "s3linncloudnewsattachments" }
     },
-    "NewsTable": {
+    "newsTable": {
       "Description": "The DynamoDb table name where news articles are stored",
       "Value": { "Ref": "dynamodblinncloudnews" }
     }
