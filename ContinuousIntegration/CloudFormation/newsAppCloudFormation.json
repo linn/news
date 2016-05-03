@@ -2,7 +2,15 @@
   "Description": "News Application",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters" : {
-    "newsTableName" : {
+    "targetCluster": {
+      "Type": "String",
+      "Description" : "ECS Cluster name within which this application should be run"
+    },
+    "dockerTag": {
+      "Type": "String",
+      "Description" : "Docker tag to deploy"
+    },
+    "newsTable" : {
       "Type" : "String",
       "Description" : "DynamoDB Table Name to store news articles"
     },
@@ -23,7 +31,7 @@
             "Statement" : [ {
               "Effect" : "Allow",
               "Action" : [ "dynamodb:Scan", "dynamodb:GetItem", "dynamodb:PutItem", "dynamoDb:DeleteItem" ],
-              "Resource"  : { "Fn::Join" :  [ "", [ "arn:aws:dynamodb:", { "Ref" : "AWS::Region" }, ":545349016803:table/", { "Ref" : "newsTableName" } ]]}
+              "Resource"  : { "Fn::Join" :  [ "", [ "arn:aws:dynamodb:", { "Ref" : "AWS::Region" }, ":545349016803:table/", { "Ref" : "newsTable" } ]]}
             }, {
               "Effect" : "Allow",
               "Action" : [ "s3:PutObject" ],
@@ -38,15 +46,57 @@
       "Properties" : {
         "UserName" : { "Ref" : "newsUser" }
       }
-    }
-  },
-  "Outputs" : {
-    "AccessKey" : {
-      "Value" : { "Ref" : "newsAccesskey" }
     },
-    "SecretKey" : {
-      "Value" : {
-        "Fn::GetAtt" : [ "newsAccesskey", "SecretAccessKey" ]
+    "taskDefinition": {
+      "Type": "AWS::ECS::TaskDefinition",
+      "Properties": {
+        "ContainerDefinitions": [
+          {
+            "Name": "Linn-News",
+            "Cpu": "1",
+            "Essential": "true",
+            "Image": { "Fn::Join" :  [ "", [ "docker.io/linn/news:", { "Ref" : "dockerTag" } ]]},
+            "Memory": "300",
+            "Environment": [
+              {
+                "Name": "AWS_REGION",
+                "Value": { "Ref": "AWS::Region" }
+              },
+              {
+                "Name": "AWS_ACCESS_KEY_ID",
+                "Value": { "Ref": "newsAccesskey" }
+              },
+              {
+                "Name": "AWS_SECRET_ACCESS_KEY",
+                "Value": { "Fn::GetAtt": [ "newsAccesskey", "SecretAccessKey" ] }
+              },
+              {
+                "Name": "NEWS_TABLE_NAME",
+                "Value": { "Ref": "newsTable" }
+              },
+              {
+                "Name": "NEWS_ATTACHMENTS_BUCKET",
+                "Value": { "Ref": "newsAttachmentsBucket" }
+              },
+              {
+                "Name": "NODE_ENV",
+                "Value": "release"
+              },
+              {
+                "Name": "PORT",
+                "Value": "3000"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "service": {
+      "Type": "AWS::ECS::Service",
+      "Properties" : {
+        "Cluster": { "Ref":"targetCluster" },
+        "DesiredCount": "1",
+        "TaskDefinition" : {"Ref":"taskDefinition"}
       }
     }
   }
