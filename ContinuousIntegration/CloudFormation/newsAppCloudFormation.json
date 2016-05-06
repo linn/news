@@ -57,6 +57,12 @@
             "Essential": "true",
             "Image": { "Fn::Join" :  [ "", [ "docker.io/linn/news:", { "Ref" : "dockerTag" } ]]},
             "Memory": "300",
+            "PortMappings": [
+              {
+                "HostPort": 60350,
+                "ContainerPort": 3000
+              }
+            ],
             "Environment": [
               {
                 "Name": "AWS_REGION",
