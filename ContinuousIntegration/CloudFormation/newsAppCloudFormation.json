@@ -56,7 +56,7 @@
             "Cpu": "1",
             "Essential": "true",
             "Image": { "Fn::Join" :  [ "", [ "docker.io/linn/news:", { "Ref" : "dockerTag" } ]]},
-            "Memory": "100",
+            "Memory": "50",
             "PortMappings": [
               {
                 "HostPort": 60350,
