@@ -1,3 +1,5 @@
+[![](https://imagelayers.io/badge/linn/news:latest.svg)](https://imagelayers.io/?images=linn/news:latest 'Get your own badge on imagelayers.io')
+
 # Linn News Service
 
 A service which provides company news and announcements
