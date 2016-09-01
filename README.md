@@ -1,4 +1,4 @@
-[![](https://imagelayers.io/badge/linn/news:latest.svg)](https://imagelayers.io/?images=linn/news:latest 'Get your own badge on imagelayers.io')
+[![](http://badge-imagelayers.iron.io/linn/news:latest.svg)](http://imagelayers.iron.io/?images=linn/news:latest 'Get your own badge on imagelayers.iron.io')
 
 # Linn News Service
 
