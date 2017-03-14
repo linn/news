@@ -27,7 +27,17 @@
     "taskDefinitionRole" : {
       "Type" : "AWS::IAM::Role",
       "Properties" : {
-        "Path" : "/",
+        "AssumeRolePolicyDocument": {
+          "Version" : "2012-10-17",
+          "Statement": [ {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": [ "ecs-tasks.amazonaws.com" ]
+            },
+            "Action": [ "sts:AssumeRole" ]
+          } ]
+        },
+        "Path": "/",
         "Policies" : [ {
           "PolicyName" : "accesstonewss3anddynamodb",
           "PolicyDocument" : {
@@ -54,7 +64,6 @@
             "Name": "linn-news",
             "Cpu": "1",
             "Essential": "true",
-            "User": "linn-news",
             "Image": { "Fn::Join" :  [ "", [ "docker.io/linn/news:", { "Ref" : "dockerTag" } ]]},
             "Memory": "100",
             "PortMappings": [
