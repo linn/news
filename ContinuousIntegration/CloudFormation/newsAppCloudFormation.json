@@ -64,6 +64,7 @@
             "Name": "linn-news",
             "Cpu": "1",
             "Essential": "true",
+            "User": "service-user",
             "Image": { "Fn::Join" :  [ "", [ "docker.io/linn/news:", { "Ref" : "dockerTag" } ]]},
             "Memory": "100",
             "PortMappings": [
