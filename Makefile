@@ -9,6 +9,7 @@ define tag_docker
 	fi
 	@if [ "$(TRAVIS_BRANCH)" = "master" -a "$(TRAVIS_PULL_REQUEST)" = "false" ]; then \
 		docker tag $(1):$(TRAVIS_BUILD_NUMBER) $(1):latest; \
+		docker tag $(1):$(TRAVIS_BUILD_NUMBER) $(1):K$(TRAVIS_BUILD_NUMBER); \
 	fi
 	@if [ "$(TRAVIS_PULL_REQUEST)" != "false" ]; then \
 		docker tag $(1):$(TRAVIS_BUILD_NUMBER) $(1):PR_$(TRAVIS_PULL_REQUEST); \
