@@ -43,7 +43,7 @@ app.get('/news', newsRoutes.listNewsArticles);
 app.get('/notifications', notificationRoutes.get);
 
 // Ping
-app.get('/ping', pingApi.ping);
+app.get('/healthcheck', pingApi.ping);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
