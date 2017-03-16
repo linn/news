@@ -17,13 +17,27 @@
     "newsAttachmentsBucket" : {
       "Type" : "String",
       "Description" : "S3 Bucket to store news article attachements"
+    },
+    "albTargetGroupArn": {
+      "Type": "String",
+      "Description": "Target Group ARN for news application"
     }
   },
   "Resources": {
-    "newsUser" : {
-      "Type" : "AWS::IAM::User",
+    "taskDefinitionRole" : {
+      "Type" : "AWS::IAM::Role",
       "Properties" : {
-        "Path" : "/",
+        "AssumeRolePolicyDocument": {
+          "Version" : "2012-10-17",
+          "Statement": [ {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": [ "ecs-tasks.amazonaws.com" ]
+            },
+            "Action": [ "sts:AssumeRole" ]
+          } ]
+        },
+        "Path": "/",
         "Policies" : [ {
           "PolicyName" : "accesstonewss3anddynamodb",
           "PolicyDocument" : {
@@ -41,25 +55,20 @@
         } ]
       }
     },
-    "newsAccesskey" : {
-      "Type" : "AWS::IAM::AccessKey",
-      "Properties" : {
-        "UserName" : { "Ref" : "newsUser" }
-      }
-    },
     "taskDefinition": {
       "Type": "AWS::ECS::TaskDefinition",
       "Properties": {
+        "TaskRoleArn": {"Fn::GetAtt" : ["taskDefinitionRole", "Arn"] },
         "ContainerDefinitions": [
           {
-            "Name": "Linn-News",
+            "Name": "linn-news",
             "Cpu": "1",
             "Essential": "true",
+            "User": "service-user",
             "Image": { "Fn::Join" :  [ "", [ "docker.io/linn/news:", { "Ref" : "dockerTag" } ]]},
             "Memory": "100",
             "PortMappings": [
               {
-                "HostPort": 60350,
                 "ContainerPort": 3000
               }
             ],
@@ -67,14 +76,6 @@
               {
                 "Name": "AWS_REGION",
                 "Value": { "Ref": "AWS::Region" }
-              },
-              {
-                "Name": "AWS_ACCESS_KEY_ID",
-                "Value": { "Ref": "newsAccesskey" }
-              },
-              {
-                "Name": "AWS_SECRET_ACCESS_KEY",
-                "Value": { "Fn::GetAtt": [ "newsAccesskey", "SecretAccessKey" ] }
               },
               {
                 "Name": "NEWS_TABLE_NAME",
@@ -101,8 +102,18 @@
       "Type": "AWS::ECS::Service",
       "Properties" : {
         "Cluster": { "Ref":"targetCluster" },
-        "DesiredCount": "1",
-        "TaskDefinition" : {"Ref":"taskDefinition"}
+        "DesiredCount": "2",
+        "TaskDefinition" : {"Ref":"taskDefinition"},
+        "Role": "ecsServiceRole",
+        "LoadBalancers": [
+          {
+            "ContainerName": "linn-news",
+            "ContainerPort": 3000,
+            "TargetGroupArn": {
+              "Ref": "albTargetGroupArn"
+            }
+          }
+        ]
       }
     }
   }
