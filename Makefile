@@ -5,14 +5,14 @@ PINGJSON := ping.json
 
 define tag_docker
 	@if [ "$(TRAVIS_BRANCH)" != "master" ]; then \
-		docker tag $(1):$(TRAVIS_BUILD_NUMBER) $(1):BUILD$(DOCKER_BRANCH_TAG); \
+		docker tag $(1):BUILD$(TRAVIS_BUILD_NUMBER) $(1):BUILD$(DOCKER_BRANCH_TAG); \
 	fi
 	@if [ "$(TRAVIS_BRANCH)" = "master" -a "$(TRAVIS_PULL_REQUEST)" = "false" ]; then \
-		docker tag $(1):$(TRAVIS_BUILD_NUMBER) $(1):latest; \
-		docker tag $(1):$(TRAVIS_BUILD_NUMBER) $(1):K$(TRAVIS_BUILD_NUMBER); \
+		docker tag $(1):BUILD$(TRAVIS_BUILD_NUMBER) $(1):latest; \
+		docker tag $(1):BUILD$(TRAVIS_BUILD_NUMBER) $(1):K$(TRAVIS_BUILD_NUMBER); \
 	fi
 	@if [ "$(TRAVIS_PULL_REQUEST)" != "false" ]; then \
-		docker tag $(1):$(TRAVIS_BUILD_NUMBER) $(1):PR$(TRAVIS_PULL_REQUEST); \
+		docker tag $(1):BUILD$(TRAVIS_BUILD_NUMBER) $(1):PR$(TRAVIS_PULL_REQUEST); \
 	fi
 endef
 
