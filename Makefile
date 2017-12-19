@@ -26,7 +26,7 @@ test: build $(PINGJSON)
 	NODE_ENV=test npm test
 
 $(DOCKER): build
-	docker build -t $(DOCKER):$(TRAVIS_BUILD_NUMBER) .
+	docker build -t $(DOCKER):BUILD$(TRAVIS_BUILD_NUMBER) .
 	
 all-the-dockers: $(DOCKER)
 
