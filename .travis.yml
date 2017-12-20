@@ -13,7 +13,6 @@ before_script:
   - aws ecr get-login --no-include-email --region eu-west-1 | sh
   - make build
 script:
-  - make test
   - make all-the-dockers
   - make docker-tag
   - make docker-push

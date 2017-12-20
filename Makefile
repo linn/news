@@ -1,4 +1,4 @@
-DOCKER := linnproducts.dkr.ecr.eu-west-1.amazonaws.com/ecr-newsrep-z29e7go0aydv
+DOCKER := 545349016803.dkr.ecr.eu-west-1.amazonaws.com/ecr-newsrep-z29e7go0aydv
 DOCKER_BRANCH_TAG := $(shell echo ${TRAVIS_BRANCH} | sed s/\#/_/g)
 TIMESTAMP := $(shell date --utc +%FT%TZ)
 PINGJSON := ping.json
@@ -25,7 +25,7 @@ $(PINGJSON):
 test: build $(PINGJSON)
 	NODE_ENV=test npm test
 
-$(DOCKER): build
+$(DOCKER): build test
 	docker build -t $(DOCKER):BUILD_$(TRAVIS_BUILD_NUMBER) .
 	
 all-the-dockers: $(DOCKER)
