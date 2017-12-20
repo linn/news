@@ -10,9 +10,7 @@ before_install:
   - ./awscli-bundle/install -b ~/bin/aws
   - export PATH=~/bin:$PATH
 before_script:
-  - aws ecr get-login --no-include-email --region eu-west-1 > docker_login.sh
-  - chmod +x docker_login.sh
-  - ./docker_login.sh
+  - aws ecr get-login --no-include-email --region eu-west-1 | sh
 after_success:
   - make all-the-dockers
   - make docker-tag
