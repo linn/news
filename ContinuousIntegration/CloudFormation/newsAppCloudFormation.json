@@ -65,7 +65,7 @@
             "Cpu": "1",
             "Essential": "true",
             "User": "service-user",
-            "Image": { "Fn::Join" :  [ "", [ "docker.io/linn/news:", { "Ref" : "dockerTag" } ]]},
+            "Image": { "Fn::Join" :  [ "", [ "545349016803.dkr.ecr.eu-west-1.amazonaws.com/news:", { "Ref" : "dockerTag" } ]]},
             "Memory": "100",
             "PortMappings": [
               {
