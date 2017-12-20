@@ -5,14 +5,14 @@ PINGJSON := ping.json
 
 define tag_docker
 	@if [ "$(TRAVIS_BRANCH)" != "master" ]; then \
-		docker tag $(1):BUILD$(TRAVIS_BUILD_NUMBER) $(1):BUILD$(DOCKER_BRANCH_TAG); \
+		docker tag $(1):BUILD_$(TRAVIS_BUILD_NUMBER) $(1):BUILD_$(DOCKER_BRANCH_TAG); \
 	fi
 	@if [ "$(TRAVIS_BRANCH)" = "master" -a "$(TRAVIS_PULL_REQUEST)" = "false" ]; then \
-		docker tag $(1):BUILD$(TRAVIS_BUILD_NUMBER) $(1):latest; \
-		docker tag $(1):BUILD$(TRAVIS_BUILD_NUMBER) $(1):K$(TRAVIS_BUILD_NUMBER); \
+		docker tag $(1):BUILD_$(TRAVIS_BUILD_NUMBER) $(1):latest; \
+		docker tag $(1):BUILD_$(TRAVIS_BUILD_NUMBER) $(1):K_$(TRAVIS_BUILD_NUMBER); \
 	fi
 	@if [ "$(TRAVIS_PULL_REQUEST)" != "false" ]; then \
-		docker tag $(1):BUILD$(TRAVIS_BUILD_NUMBER) $(1):PR$(TRAVIS_PULL_REQUEST); \
+		docker tag $(1):BUILD_$(TRAVIS_BUILD_NUMBER) $(1):PR_$(TRAVIS_PULL_REQUEST); \
 	fi
 endef
 
@@ -26,7 +26,7 @@ test: build $(PINGJSON)
 	NODE_ENV=test npm test
 
 $(DOCKER): build
-	docker build -t $(DOCKER):BUILD$(TRAVIS_BUILD_NUMBER) .
+	docker build -t $(DOCKER):BUILD_$(TRAVIS_BUILD_NUMBER) .
 	
 all-the-dockers: $(DOCKER)
 
