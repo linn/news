@@ -11,7 +11,6 @@ before_install:
   - export PATH=~/bin:$PATH
 before_script:
   - aws ecr get-login --no-include-email --region eu-west-1 | sh
-  - make build
 script:
   - make all-the-dockers
   - make docker-tag

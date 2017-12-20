@@ -1,4 +1,4 @@
-DOCKER := 545349016803.dkr.ecr.eu-west-1.amazonaws.com/ecr-newsrep-z29e7go0aydv
+DOCKER := 545349016803.dkr.ecr.eu-west-1.amazonaws.com/news
 DOCKER_BRANCH_TAG := $(shell echo ${TRAVIS_BRANCH} | sed s/\#/_/g)
 TIMESTAMP := $(shell date --utc +%FT%TZ)
 PINGJSON := ping.json
