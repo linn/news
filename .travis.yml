@@ -15,3 +15,4 @@ script:
   - make all-the-dockers
   - make docker-tag
   - make docker-push
+after_success: travis_wait ./scripts/deploy.sh
