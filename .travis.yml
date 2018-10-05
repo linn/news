@@ -6,6 +6,10 @@ services:
   - docker
 before_install:
   - chmod +x ./scripts/*.sh
+  - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+  - unzip awscli-bundle.zip
+  - ./awscli-bundle/install -b ~/bin/aws
+  - export PATH=~/bin:$PATH
 before_script:
   - aws ecr get-login --no-include-email --region eu-west-1 | sh
 script:
