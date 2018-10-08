@@ -1,4 +1,4 @@
-[![](http://badge-imagelayers.iron.io/linn/news:latest.svg)](http://imagelayers.iron.io/?images=linn/news:latest 'Get your own badge on imagelayers.iron.io')
+[![Build Status](https://travis-ci.com/linn/news.svg?token=1ntuHFpr7zKcEqiTxNLN&branch=master)](https://travis-ci.com/linn/news)
 
 # Linn News Service
 
@@ -6,7 +6,7 @@ A service which provides company news and announcements
 
 ## Installation
 
-This service uses AWS, you will need to acquire credentials and install them on the target server first. 
+This service uses AWS, you will need to acquire credentials and install them on the target server first.
 
 ### Packaging
 

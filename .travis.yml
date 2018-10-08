@@ -5,6 +5,7 @@ sudo: required
 services:
   - docker
 before_install:
+  - chmod +x ./scripts/*.sh
   - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
   - unzip awscli-bundle.zip
   - ./awscli-bundle/install -b ~/bin/aws
@@ -15,3 +16,4 @@ script:
   - make all-the-dockers
   - make docker-tag
   - make docker-push
+after_success: travis_wait ./scripts/deploy.sh

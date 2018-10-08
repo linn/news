@@ -1,0 +1,108 @@
+Description: News Application
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  dockerTag:
+    Type: String
+    Description: Docker tag to deploy
+  newsTable:
+    Type: String
+    Default: "linn.cloud.news"
+    Description: DynamoDB Table Name to store news articles
+  newsAttachmentsBucket:
+    Type: String
+    Default: "linn.cloud.news.attachments"
+    Description: S3 Bucket to store news article attachements
+  environmentSuffix:
+    Type: String
+    AllowedValues:
+      - ''
+      - -int
+      - -sys
+    Description: Environment suffix e.g -int -sys
+  TestClusterName:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Name of test cluster
+    Default: TestClusterName
+  ProductionClusterName:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Name of production cluster
+    Default: ProductionClusterName
+
+Conditions:
+  isTesting: !Or
+    - !Equals [!Ref environmentSuffix, "-int"]
+    - !Equals [!Ref environmentSuffix, "-sys"]
+
+Resources:
+  taskDefinitionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: accesstonewss3anddynamodb
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:Scan
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamoDb:DeleteItem
+                Resource: !Join ['', ['arn:aws:dynamodb:', !Ref 'AWS::Region', ':545349016803:table/',
+                    !Ref 'newsTable']]
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                Resource: !Join ['', ['arn:aws:s3:::', !Ref 'newsAttachmentsBucket',
+                    /*]]
+  taskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      TaskRoleArn: !GetAtt 'taskDefinitionRole.Arn'
+      ContainerDefinitions:
+        - Name: linn-news
+          Cpu: '1'
+          Essential: 'true'
+          User: service-user
+          Image: !Join [':', [!ImportValue 'ecr-repository-news', !Ref 'dockerTag']]
+          Memory: '100'
+          PortMappings:
+            - ContainerPort: 3000
+          Environment:
+            - Name: AWS_REGION
+              Value: !Ref 'AWS::Region'
+            - Name: NEWS_TABLE_NAME
+              Value: !Ref 'newsTable'
+            - Name: NEWS_ATTACHMENTS_BUCKET
+              Value: !Ref 'newsAttachmentsBucket'
+            - Name: NODE_ENV
+              Value: release
+            - Name: PORT
+              Value: '3000'
+  service:
+    Type: AWS::ECS::Service
+    Properties:
+      # Have to use long form conditional
+      Cluster: !If
+        - isTesting
+        - !Sub ${TestClusterName}
+        - !Sub ${ProductionClusterName}
+      DesiredCount: !If [ isTesting, 1, 2]
+      TaskDefinition: !Ref 'taskDefinition'
+      Role: ecsServiceRole
+      LoadBalancers:
+        - ContainerName: linn-news
+          ContainerPort: 3000
+          TargetGroupArn:
+            Fn::ImportValue:
+              !Sub "news-target-group-arn${environmentSuffix}"
