@@ -21,9 +21,7 @@ app.set('view engine', 'jade');
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(requestLogger(config.requestLoggerFormat, { stream: log.stream }));
-
 app.use(bodyParser.json());
-
 app.use(cookieParser());
 
 app.use('/news', express.static(path.join(__dirname, 'public')));
