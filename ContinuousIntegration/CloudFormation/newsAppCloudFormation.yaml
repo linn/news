@@ -1,3 +1,4 @@
+---
 Description: News Application
 AWSTemplateFormatVersion: '2010-09-09'
 Parameters:
@@ -89,6 +90,12 @@ Resources:
               Value: release
             - Name: PORT
               Value: '3000'
+          DockerLabels:
+            traefik.enable: true
+            traefik.http.routers.news.entrypoints: web
+            traefik.http.routers.news.rule: "PathPrefix(`/news`) || PathPrefix(`/notifications`)"
+            traefik.http.services.news.loadbalancer.healthcheck.path: "/healthcheck"
+          LogConfiguration:
   service:
     Type: AWS::ECS::Service
     Properties:
