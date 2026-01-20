@@ -1,0 +1,86 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+env:
+  AWS_REGION: eu-west-1
+  ECR_REPOSITORY: 545349016803.dkr.ecr.eu-west-1.amazonaws.com/news
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '4.1'
+
+      - name: Make scripts executable
+        run: chmod +x ./scripts/*.sh
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Set environment variables
+        run: |
+          echo "DOCKER_BRANCH_TAG=$(echo ${{ github.ref_name }} | sed 's/#/_/g')" >> $GITHUB_ENV
+          echo "TIMESTAMP=$(date --utc +%FT%TZ)" >> $GITHUB_ENV
+          
+          # Set CI flag for Makefile
+          echo "CI=true" >> $GITHUB_ENV
+          
+          # Map GitHub Actions variables to Travis-like variables for Makefile compatibility
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "TRAVIS_BRANCH=${{ github.base_ref }}" >> $GITHUB_ENV
+            echo "TRAVIS_BUILD_NUMBER=${{ github.run_number }}" >> $GITHUB_ENV
+            echo "TRAVIS_COMMIT=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+            echo "TRAVIS_PULL_REQUEST=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
+          else
+            echo "TRAVIS_BRANCH=${{ github.ref_name }}" >> $GITHUB_ENV
+            echo "TRAVIS_BUILD_NUMBER=${{ github.run_number }}" >> $GITHUB_ENV
+            echo "TRAVIS_COMMIT=${{ github.sha }}" >> $GITHUB_ENV
+            echo "TRAVIS_PULL_REQUEST=false" >> $GITHUB_ENV
+          fi
+
+      - name: Build Docker images
+        run: make all-the-dockers
+
+      - name: Tag Docker images
+        run: make docker-tag
+
+      - name: Push Docker images
+        run: make docker-push
+
+      - name: Deploy to AWS
+        if: success()
+        env:
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          DATABASE_USER_ID: ${{ secrets.DATABASE_USER_ID }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          RABBIT_SERVER: ${{ secrets.RABBIT_SERVER }}
+          RABBIT_PORT: ${{ secrets.RABBIT_PORT }}
+          RABBIT_USERNAME: ${{ secrets.RABBIT_USERNAME }}
+          RABBIT_PASSWORD: ${{ secrets.RABBIT_PASSWORD }}
+          AUTHORITY_URI: ${{ secrets.AUTHORITY_URI }}
+          LOG_ENVIRONMENT: ${{ secrets.LOG_ENVIRONMENT }}
+          LOG_MAX_INNER_EXCEPTION_DEPTH: ${{ secrets.LOG_MAX_INNER_EXCEPTION_DEPTH }}
+        run: ./scripts/deploy.sh
