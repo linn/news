@@ -27,6 +27,7 @@ jobs:
       - name: Make scripts executable
         run: chmod +x ./scripts/*.sh
       
+      # AWS credentials must be configured in GitHub repository secrets
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
