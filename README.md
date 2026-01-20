@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/linn/news.svg?token=1ntuHFpr7zKcEqiTxNLN&branch=master)](https://travis-ci.com/linn/news)
+[![Build Status](https://github.com/linn/news/workflows/CI%2FCD/badge.svg)](https://github.com/linn/news/actions)
 
 # Linn News Service
 
