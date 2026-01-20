@@ -37,6 +37,6 @@ docker-push:
 	@if [ -n "$(CI)" ]; then \
 		docker push $(DOCKER); \
 	else \
-		echo "Only push to Docker from Travis"; \
+		echo "Only push to Docker from CI"; \
 		exit 1; \
 	fi

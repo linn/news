@@ -1,0 +1,66 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '4.1'
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Make scripts executable
+        run: chmod +x ./scripts/*.sh
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: eu-west-1
+      
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      
+      - name: Build and test
+        run: make all-the-dockers
+        env:
+          TRAVIS_BRANCH: ${{ github.ref_name }}
+          TRAVIS_BUILD_NUMBER: ${{ github.run_number }}
+          TRAVIS_COMMIT: ${{ github.sha }}
+          TRAVIS_PULL_REQUEST: ${{ github.event.pull_request.number || 'false' }}
+          CI: true
+      
+      - name: Tag Docker images
+        run: make docker-tag
+        env:
+          TRAVIS_BRANCH: ${{ github.ref_name }}
+          TRAVIS_BUILD_NUMBER: ${{ github.run_number }}
+          TRAVIS_PULL_REQUEST: ${{ github.event.pull_request.number || 'false' }}
+      
+      - name: Push Docker images
+        run: make docker-push
+        env:
+          CI: true
+      
+      - name: Deploy
+        run: ./scripts/deploy.sh
+        env:
+          TRAVIS_BRANCH: ${{ github.ref_name }}
+          TRAVIS_BUILD_NUMBER: ${{ github.run_number }}
+          TRAVIS_COMMIT: ${{ github.sha }}
+          TRAVIS_PULL_REQUEST: ${{ github.event.pull_request.number || 'false' }}
